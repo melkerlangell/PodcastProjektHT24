@@ -1,9 +1,8 @@
 ﻿namespace PodcastProjektHT24
 {
-    partial class Podcast
+    partial class Form1
     {
         /// <summary>
-        /// test
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -29,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
-            // Podcast
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "Podcast";
-            Text = "Podcast";
-            Load += Podcast_Load;
-            ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "Form1";
         }
 
         #endregion

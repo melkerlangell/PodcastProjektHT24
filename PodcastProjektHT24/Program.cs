@@ -1,6 +1,3 @@
-using System;
-
-
 namespace PodcastProjektHT24
 {
     internal static class Program
@@ -14,16 +11,7 @@ namespace PodcastProjektHT24
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Podcast());
-           
+            Application.Run(new Form1());
         }
     }
 }
-
-
-//TEST ADAM
-
-//TEST PUSH I VS
-
-//test Noa Boa
-

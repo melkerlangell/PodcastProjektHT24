@@ -1,17 +1,10 @@
 namespace PodcastProjektHT24
 {
-    public partial class Podcast : Form
+    public partial class Form1 : Form
     {
-        public Podcast()
+        public Form1()
         {
             InitializeComponent();
         }
-
-        private void Podcast_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
-
-//TEST
