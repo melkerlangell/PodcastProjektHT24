@@ -1,3 +1,6 @@
+using System;
+
+
 namespace PodcastProjektHT24
 {
     internal static class Program
@@ -12,6 +15,7 @@ namespace PodcastProjektHT24
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Podcast());
+           
         }
     }
 }
