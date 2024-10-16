@@ -1,9 +1,8 @@
 ﻿namespace PodcastProjektHT24
 {
-    partial class Podcast
+    partial class Form1
     {
         /// <summary>
-        /// test
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -29,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            label1 = new Label();
             SuspendLayout();
             // 
-            // Podcast
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(643, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(70, 21);
+            label1.TabIndex = 0;
+            label1.Text = "Podcast";
+            label1.Click += label1_Click;
+            // 
+            // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "Podcast";
+            ClientSize = new Size(1398, 733);
+            Controls.Add(label1);
+            Name = "Form1";
             Text = "Podcast";
-            Load += Podcast_Load;
+            Load += Form1_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label label1;
     }
 }
