@@ -20,6 +20,7 @@ namespace test
             Application.Run(new Form1());
 
             //test push noaa
+            //test igen noa
         }
     }
 }
