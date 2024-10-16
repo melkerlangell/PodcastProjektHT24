@@ -19,7 +19,7 @@ namespace test
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            //test push noa
+            //test push noaa
         }
     }
 }
