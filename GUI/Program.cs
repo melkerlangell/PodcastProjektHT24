@@ -1,4 +1,4 @@
-namespace PodcastProjektHT24
+namespace GUI
 {
     internal static class Program
     {
