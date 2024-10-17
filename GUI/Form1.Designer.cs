@@ -37,7 +37,6 @@
             labelURL = new Label();
             btnAterstall = new Button();
             textNamn = new TextBox();
-            cbxTid = new ComboBox();
             cbxKategori = new ComboBox();
             label1 = new Label();
             label2 = new Label();
@@ -134,20 +133,12 @@
             textNamn.Size = new Size(192, 23);
             textNamn.TabIndex = 8;
             // 
-            // cbxTid
-            // 
-            cbxTid.FormattingEnabled = true;
-            cbxTid.Location = new Point(70, 140);
-            cbxTid.Name = "cbxTid";
-            cbxTid.Size = new Size(75, 23);
-            cbxTid.TabIndex = 9;
-            // 
             // cbxKategori
             // 
             cbxKategori.FormattingEnabled = true;
-            cbxKategori.Location = new Point(151, 140);
+            cbxKategori.Location = new Point(72, 140);
             cbxKategori.Name = "cbxKategori";
-            cbxKategori.Size = new Size(111, 23);
+            cbxKategori.Size = new Size(190, 23);
             cbxKategori.TabIndex = 10;
             // 
             // label1
@@ -278,7 +269,6 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(cbxKategori);
-            Controls.Add(cbxTid);
             Controls.Add(textNamn);
             Controls.Add(btnAterstall);
             Controls.Add(labelURL);
@@ -305,7 +295,6 @@
         private Label labelURL;
         private Button btnAterstall;
         private TextBox textNamn;
-        private ComboBox cbxTid;
         private ComboBox cbxKategori;
         private Label label1;
         private Label label2;
