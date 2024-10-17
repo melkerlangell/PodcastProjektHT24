@@ -47,12 +47,11 @@
             richTextBeskrivning = new RichTextBox();
             listBoxAvsnitt = new ListBox();
             listPodd = new ListView();
-            antalAvsnitt = new ColumnHeader();
             namn = new ColumnHeader();
+            antalAvsnitt = new ColumnHeader();
             titel = new ColumnHeader();
-            frekvens = new ColumnHeader();
-            label3 = new Label();
             kategori = new ColumnHeader();
+            label3 = new Label();
             SuspendLayout();
             // 
             // labelPodd
@@ -72,7 +71,7 @@
             btnLaggTill.TabIndex = 1;
             btnLaggTill.Text = "Lägg till";
             btnLaggTill.UseVisualStyleBackColor = true;
-            btnLaggTill.Click += button1_Click;
+            btnLaggTill.Click += btnLaggTill_Click;
             // 
             // btnAndra
             // 
@@ -91,7 +90,6 @@
             btnTaBort.TabIndex = 3;
             btnTaBort.Text = "Ta bort";
             btnTaBort.UseVisualStyleBackColor = true;
-            btnTaBort.Click += button3_Click;
             // 
             // textURL
             // 
@@ -211,34 +209,36 @@
             listBoxAvsnitt.Name = "listBoxAvsnitt";
             listBoxAvsnitt.Size = new Size(189, 274);
             listBoxAvsnitt.TabIndex = 18;
+            listBoxAvsnitt.SelectedIndexChanged += listBoxAvsnitt_SelectedIndexChanged;
             // 
             // listPodd
             // 
-            listPodd.Columns.AddRange(new ColumnHeader[] { antalAvsnitt, namn, titel, frekvens, kategori });
+            listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
             listPodd.Location = new Point(70, 189);
             listPodd.Name = "listPodd";
             listPodd.Size = new Size(553, 274);
             listPodd.TabIndex = 19;
             listPodd.UseCompatibleStateImageBehavior = false;
             listPodd.View = View.Details;
+            listPodd.SelectedIndexChanged += listPodd_SelectedIndexChanged;
+            // 
+            // namn
+            // 
+            namn.Text = "Namn";
+            namn.Width = 225;
             // 
             // antalAvsnitt
             // 
             antalAvsnitt.Text = "Antal Avsnitt";
             antalAvsnitt.Width = 120;
             // 
-            // namn
-            // 
-            namn.Text = "Namn";
-            // 
             // titel
             // 
             titel.Text = "Titel";
             // 
-            // frekvens
+            // kategori
             // 
-            frekvens.Text = "Frekvens";
-            frekvens.Width = 80;
+            kategori.Text = "Kategori";
             // 
             // label3
             // 
@@ -248,10 +248,6 @@
             label3.Size = new Size(38, 15);
             label3.TabIndex = 20;
             label3.Text = "label3";
-            // 
-            // kategori
-            // 
-            kategori.Text = "Kategori";
             // 
             // Form1
             // 
@@ -280,6 +276,7 @@
             Controls.Add(labelPodd);
             Name = "Form1";
             Text = "Form1";
+           
             ResumeLayout(false);
             PerformLayout();
         }
@@ -308,7 +305,6 @@
         private ColumnHeader antalAvsnitt;
         private ColumnHeader namn;
         private ColumnHeader titel;
-        private ColumnHeader frekvens;
         private Label label3;
         private ColumnHeader kategori;
     }

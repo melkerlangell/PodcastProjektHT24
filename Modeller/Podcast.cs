@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Modeller
 {
+    [Serializable]
     public class Podcast
     {
         public string Titel {  get; set; }
-        public string Url { get; set; }
-        public string Beskrivning { get; set; }
-        public DateTime PubliceringsDatum { get; set; }
+        public int AntalAvsnitt { get; set; }
+        
+        public List<Avsnitt> poddAvsnitt { get; set; }
         public string Kategori {  get; set; }
 
 
-        public Podcast() { }
+        public Podcast() 
+        {
+            poddAvsnitt = new List<Avsnitt>();
+        }
     }
 }
