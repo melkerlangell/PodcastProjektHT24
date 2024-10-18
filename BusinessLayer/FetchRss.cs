@@ -29,12 +29,18 @@ namespace BusinessLayer
                     SyndicationFeed feed = SyndicationFeed.Load(reader);
                     if (feed != null)
                     {
+<<<<<<< HEAD
                         enPodd.Titel = feed.Title.Text;
                         foreach (SyndicationItem item in feed.Items)
                         {
                             string title = item.Title.Text;
                             DateTime publishDate = item.PublishDate.DateTime;
                             string description = item.Summary?.Text ?? "No description available";
+=======
+                        string title = item.Title.Text;
+                        DateTime publishDate = item.PublishDate.DateTime;
+                        string description = item.Summary?.Text ?? "Ingen beskrivning finns förs avsnittet";
+>>>>>>> a93ab40f820588f09e4b76151245339aa21fed3f
 
                             enPodd.poddAvsnitt.Add(new Avsnitt(title, publishDate, description));
                         }
