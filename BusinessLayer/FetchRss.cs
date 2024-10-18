@@ -8,7 +8,7 @@ using System.ServiceModel.Syndication;
 using Modeller;
 using DataLayer;
 
-namespace DataLayer
+namespace BusinessLayer
 {
     public class FetchRss
     {
@@ -22,26 +22,32 @@ namespace DataLayer
         public void FetchPodcast(string url)
         {
             Podcast enPodd = new Podcast();
-
-            using (XmlReader reader = XmlReader.Create(url.Trim()))
+            try
             {
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
-                if (feed != null)
+                using (XmlReader reader = XmlReader.Create(url.Trim()))
                 {
-                    enPodd.Titel = feed.Title.Text;
-
-                    foreach (SyndicationItem item in feed.Items)
+                    SyndicationFeed feed = SyndicationFeed.Load(reader);
+                    if (feed != null)
                     {
-                        string title = item.Title.Text;
-                        DateTime publishDate = item.PublishDate.DateTime;
-                        string description = item.Summary?.Text ?? "No description available";
+                        enPodd.Titel = feed.Title.Text;
+                        foreach (SyndicationItem item in feed.Items)
+                        {
+                            string title = item.Title.Text;
+                            DateTime publishDate = item.PublishDate.DateTime;
+                            string description = item.Summary?.Text ?? "No description available";
 
-                        enPodd.poddAvsnitt.Add(new Avsnitt(title, publishDate, description));
+                            enPodd.poddAvsnitt.Add(new Avsnitt(title, publishDate, description));
+                        }
+
+                        enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+                        poddRep.AddPodd(enPodd);
                     }
-
-                    enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
-                    poddRep.AddPodd(enPodd);  
                 }
+            }
+            catch (Exception ex)
+            {
+                // Hantera fel
+                Console.WriteLine($"Error fetching podcast: {ex.Message}");
             }
         }
 
