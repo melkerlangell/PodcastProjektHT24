@@ -34,7 +34,7 @@ namespace DataLayer
                     {
                         string title = item.Title.Text;
                         DateTime publishDate = item.PublishDate.DateTime;
-                        string description = item.Summary?.Text ?? "No description available";
+                        string description = item.Summary?.Text ?? "Ingen beskrivning finns förs avsnittet";
 
                         enPodd.poddAvsnitt.Add(new Avsnitt(title, publishDate, description));
                     }
