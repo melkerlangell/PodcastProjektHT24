@@ -48,7 +48,6 @@ namespace BusinessLayer
             }
             catch (Exception ex)
             {
-                // Hantera fel
                 Console.WriteLine($"Error fetching podcast: {ex.Message}");
             }
         }
