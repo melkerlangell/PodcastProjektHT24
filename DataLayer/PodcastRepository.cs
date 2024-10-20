@@ -8,7 +8,7 @@ using Modeller;
 using DataLayer;
 
 
-namespace BusinessLayer
+namespace DataLayer
 {
     public class PodcastRepository
     {
