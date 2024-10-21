@@ -87,7 +87,7 @@ namespace GUI
 
             if (listBoxAvsnitt.SelectedItem != null)
             {
-                var selectedEpisode = (Avsnitt)listBoxAvsnitt.SelectedItem;
+                Avsnitt selectedEpisode = (Avsnitt)listBoxAvsnitt.SelectedItem;
                 richTextBeskrivning.Text = selectedEpisode.Description;
             }
         }
