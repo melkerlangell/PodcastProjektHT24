@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repository
 {
-    internal interface IRepository
+    public interface IRepository<T>
     {
+        List<T> GetAll();
+        T GetByID(string id);
+        void Insert(T theObject);
+        void Update(T theObject);
+        void Delete(T theObject);
+        void SaveChanges();
     }
 }
