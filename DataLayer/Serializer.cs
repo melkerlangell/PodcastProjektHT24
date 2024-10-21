@@ -4,39 +4,44 @@ using System.Xml.Serialization;
 
 namespace DataLayer
 {
-    public class Serializer
+    public class Serializer<T>
     {
         ValideringDAL validering;
+        private string filNamn;
+        public string FilNamn
+        {
+            set
+            {
+                filNamn = value;
+            }
+        }
 
-        public Serializer()
+        public Serializer(string fNamn)
         {
             validering = new ValideringDAL();
+            FilNamn = fNamn + ".xml";
         }
-        public void SparaPoddar(List<Podcast> allaPoddar, string filNamn)
+        public void SparaPoddar(List<T> allaPoddar)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
 
-            using (FileStream fil = new FileStream(filNamn+ ".xml", FileMode.Create, FileAccess.Write))
+            using (FileStream fil = new FileStream(filNamn, FileMode.Create, FileAccess.Write))
             {
                 serializer.Serialize(fil, allaPoddar);
             }
         }
 
-        public List<Podcast> LasInPoddar()
+        public List<T> LasInPoddar()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
-            string filNamn = typeof(List<Podcast>) .Titel + ".xml";
-            if(validering.ValidXml(filNamn) && File.Exists(filNamn)) { 
+            List<T> poddListan;
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+            
 
-            using (FileStream fil = File.OpenRead(filNamn))
+                using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
             {
-                return (List<Podcast>)serializer.Deserialize(fil);
+                    return (List<T>)serializer.Deserialize(fil);
             }
-            }
-            else
-            {
-                return new List<Podcast>();
-            }
+            return poddListan;
         }
     }
 }
