@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.ServiceModel.Syndication;
 using Modeller;
-using DataLayer;
 
-namespace BusinessLayer
+
+namespace DataLayer
 {
     public class FetchRss
     {
-        private PodcastRepository poddRep;
+        private Repository.PoddRepository poddRep;
 
         public FetchRss()
         {
-            poddRep = new PodcastRepository();
+            poddRep = new Repository.PoddRepository();
         }
 
         public void FetchPodcast(string url)
