@@ -11,8 +11,8 @@ namespace DataLayer.Repository
         List<T> GetAll();
         T GetByID(string id);
         void Insert(T theObject);
-        void Update(T theObject);
-        void Delete(T theObject);
+        void Update(int index, T theObject);
+        void Delete(int index);
         void SaveChanges();
     }
 }

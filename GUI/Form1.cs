@@ -1,23 +1,44 @@
 using Modeller;
-using DataLayer;
 using BusinessLayer;
+
 
 namespace GUI
 {
     public partial class Form1 : Form
     {
-        private FetchRss fetcher;
+        private PodcastController poddKontroll;
+        
+        
        
 
         public Form1()
         {
             InitializeComponent();
-            fetcher = new FetchRss();
-            
-           
+            poddKontroll = new PodcastController();
+            hamtaAllaPoddar();
+
         }
 
-        
+        private void hamtaAllaPoddar()
+        {
+            List<Podcast> poddar = poddKontroll.getPoddar();
+            if (poddar == null)
+            {
+                return;
+            }
+
+            foreach (Podcast p in poddar)
+            {
+                ListViewItem podcastItem = new ListViewItem(p.Titel);
+                podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
+                podcastItem.SubItems.Add(p.Kategori ?? "Unknown");
+
+                listPodd.Items.Add(podcastItem);
+            }
+        }
+
+
+
 
         private void btnLaggTill_Click(object sender, EventArgs e)
         {
@@ -25,13 +46,13 @@ namespace GUI
 
             try
             {
-                fetcher.FetchPodcast(url);
+                poddKontroll.FetchRssPoddar(url); 
+
+                listPodd.Items.Clear(); 
+                
 
 
-                listPodd.Items.Clear();
-
-
-                foreach (Podcast p in fetcher.GetPodcasts())
+                foreach (Podcast p in poddKontroll.getPoddar())
                 {
 
                     ListViewItem podcastItem = new ListViewItem(p.Titel);
@@ -47,6 +68,7 @@ namespace GUI
             {
                 MessageBox.Show($"Error fetching podcast: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            textURL.Clear();
 
         }
 
@@ -57,7 +79,7 @@ namespace GUI
 
             if (listPodd.SelectedItems.Count > 0)
             {
-                var selectedPodcast = fetcher.GetPodcasts()[listPodd.SelectedIndices[0]];
+                var selectedPodcast = poddKontroll.getPoddar()[listPodd.SelectedIndices[0]];
 
                 foreach (var episode in selectedPodcast.poddAvsnitt)
                 {

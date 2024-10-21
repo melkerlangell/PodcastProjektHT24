@@ -6,42 +6,36 @@ namespace DataLayer
 {
     public class Serializer<T>
     {
-        ValideringDAL validering;
-        private string filNamn;
-        public string FilNamn
+        private string filNamn = Path.Combine(Directory.GetCurrentDirectory(), "poddar.xml");
+
+        public Serializer()
         {
-            set
-            {
-                filNamn = value;
-            }
         }
 
-        public Serializer(string fNamn)
-        {
-            validering = new ValideringDAL();
-            FilNamn = fNamn + ".xml";
-        }
         public void SparaPoddar(List<T> allaPoddar)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
 
             using (FileStream fil = new FileStream(filNamn, FileMode.Create, FileAccess.Write))
             {
-                serializer.Serialize(fil, allaPoddar);
+                serializer.Serialize(fil, allaPoddar); 
             }
         }
 
         public List<T> LasInPoddar()
         {
-            List<T> poddListan;
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-            
-
-                using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
+            if (!File.Exists(filNamn))
             {
-                    return (List<T>)serializer.Deserialize(fil);
+                return null; 
             }
-            return poddListan;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+            using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
+            {
+                return (List<T>)serializer.Deserialize(fil); 
+            }
         }
     }
+
 }
