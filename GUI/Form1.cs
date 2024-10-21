@@ -7,9 +7,9 @@ namespace GUI
     public partial class Form1 : Form
     {
         private PodcastController poddKontroll;
-        
-        
-       
+
+
+
 
         public Form1()
         {
@@ -46,10 +46,10 @@ namespace GUI
 
             try
             {
-                poddKontroll.FetchRssPoddar(url); 
+                poddKontroll.FetchRssPoddar(url);
 
-                listPodd.Items.Clear(); 
-                
+                listPodd.Items.Clear();
+
 
 
                 foreach (Podcast p in poddKontroll.getPoddar())
@@ -93,7 +93,7 @@ namespace GUI
         {
             richTextBeskrivning.Clear();
 
-           
+
             if (listBoxAvsnitt.SelectedItem != null)
             {
                 var selectedEpisode = (Avsnitt)listBoxAvsnitt.SelectedItem;
@@ -101,6 +101,9 @@ namespace GUI
             }
         }
 
-       
+        private void btnAndra_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
