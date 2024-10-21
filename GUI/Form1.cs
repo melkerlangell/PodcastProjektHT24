@@ -16,7 +16,7 @@ namespace GUI
             InitializeComponent();
             poddKontroll = new PodcastController();
             hamtaAllaPoddar();
-
+            richTextBeskrivning.ReadOnly = true;
         }
 
         private void hamtaAllaPoddar()
@@ -29,9 +29,10 @@ namespace GUI
 
             foreach (Podcast p in poddar)
             {
-                ListViewItem podcastItem = new ListViewItem(p.Titel);
+                ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
                 podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-                podcastItem.SubItems.Add(p.Kategori ?? "Unknown");
+                podcastItem.SubItems.Add(p.Titel);
+                podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
 
                 listPodd.Items.Add(podcastItem);
             }
@@ -43,31 +44,21 @@ namespace GUI
         private void btnLaggTill_Click(object sender, EventArgs e)
         {
             string url = textURL.Text;
+            string egetNamn = textNamn.Text;
 
             try
             {
-                poddKontroll.FetchRssPoddar(url);
+                poddKontroll.FetchRssPoddar(url, egetNamn);
 
                 listPodd.Items.Clear();
-
-
-
-                foreach (Podcast p in poddKontroll.getPoddar())
-                {
-
-                    ListViewItem podcastItem = new ListViewItem(p.Titel);
-                    podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-                    podcastItem.SubItems.Add(p.Kategori ?? "Unknown");
-
-
-                    listPodd.Items.Add(podcastItem);
-                }
+                hamtaAllaPoddar();
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error fetching podcast: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error vid hämtning av poddar {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             textURL.Clear();
 
         }
@@ -81,7 +72,7 @@ namespace GUI
             {
                 var selectedPodcast = poddKontroll.getPoddar()[listPodd.SelectedIndices[0]];
 
-                foreach (var episode in selectedPodcast.poddAvsnitt)
+                foreach (Avsnitt episode in selectedPodcast.poddAvsnitt)
                 {
 
                     listBoxAvsnitt.Items.Add(episode);
@@ -104,6 +95,33 @@ namespace GUI
         private void btnAndra_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnTaBort_Click(object sender, EventArgs e)
+        {
+            if (listPodd.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    int valdPodd = listPodd.SelectedIndices[0];
+                    var bekraftaVal = MessageBox.Show("Är du säker på att du vill ta bort flödet?", "Bekräfta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (bekraftaVal == DialogResult.Yes)
+                    {
+                        poddKontroll.TaBortPodd(valdPodd);
+                        listPodd.Items.Clear();
+                        hamtaAllaPoddar();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error vid borttagning av podd: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Välj vilket flöde du vill ta bort");
+            }
         }
     }
 }

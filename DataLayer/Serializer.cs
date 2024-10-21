@@ -1,5 +1,6 @@
 ﻿using Modeller;
 using System.ServiceModel.Syndication;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace DataLayer
@@ -10,6 +11,9 @@ namespace DataLayer
 
         public Serializer()
         {
+            //behövs för att kunna lägga till eget namn på podcasten
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Parse;
         }
 
         public void SparaPoddar(List<T> allaPoddar)

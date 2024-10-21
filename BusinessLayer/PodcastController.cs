@@ -23,14 +23,21 @@ namespace BusinessLayer
         {
             return poddRep.GetAll();
         }
+
+
+        public void TaBortPodd(int index)
+        {
+            poddRep.Delete(index);
+        }
         
-        public void FetchRssPoddar(string rssLank)
+        public void FetchRssPoddar(string rssLank, string egetNamn)
         {
             XmlReader minXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
 
             Podcast enPodd = new Podcast();
             enPodd.Titel = poddFlode.Title.Text;
+            enPodd.EgetNamn = egetNamn;
 
             foreach (SyndicationItem item in poddFlode.Items)
             {
@@ -38,7 +45,7 @@ namespace BusinessLayer
                 {
                     ettAvsnitt.Title = item.Title.Text;
                     ettAvsnitt.PublishDate = item.PublishDate.DateTime;
-                    ettAvsnitt.Description = item.Summary?.Text ?? "No description available";
+                    ettAvsnitt.Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig";
                 };
                 enPodd.poddAvsnitt.Add(ettAvsnitt);
             }

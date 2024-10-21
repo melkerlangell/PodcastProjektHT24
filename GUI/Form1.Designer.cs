@@ -57,18 +57,17 @@
             // labelPodd
             // 
             labelPodd.AutoSize = true;
-            labelPodd.Location = new Point(623, 49);
+            labelPodd.Location = new Point(545, 37);
             labelPodd.Name = "labelPodd";
-            labelPodd.Size = new Size(60, 20);
+            labelPodd.Size = new Size(49, 15);
             labelPodd.TabIndex = 0;
             labelPodd.Text = "Podcast";
             // 
             // btnLaggTill
             // 
-            btnLaggTill.Location = new Point(411, 151);
-            btnLaggTill.Margin = new Padding(3, 4, 3, 4);
+            btnLaggTill.Location = new Point(360, 113);
             btnLaggTill.Name = "btnLaggTill";
-            btnLaggTill.Size = new Size(77, 28);
+            btnLaggTill.Size = new Size(67, 21);
             btnLaggTill.TabIndex = 1;
             btnLaggTill.Text = "Lägg till";
             btnLaggTill.UseVisualStyleBackColor = true;
@@ -76,10 +75,9 @@
             // 
             // btnAndra
             // 
-            btnAndra.Location = new Point(495, 151);
-            btnAndra.Margin = new Padding(3, 4, 3, 4);
+            btnAndra.Location = new Point(433, 113);
             btnAndra.Name = "btnAndra";
-            btnAndra.Size = new Size(77, 28);
+            btnAndra.Size = new Size(67, 21);
             btnAndra.TabIndex = 2;
             btnAndra.Text = "Ändra";
             btnAndra.UseVisualStyleBackColor = true;
@@ -87,111 +85,103 @@
             // 
             // btnTaBort
             // 
-            btnTaBort.Location = new Point(578, 151);
-            btnTaBort.Margin = new Padding(3, 4, 3, 4);
+            btnTaBort.Location = new Point(506, 113);
             btnTaBort.Name = "btnTaBort";
-            btnTaBort.Size = new Size(77, 28);
+            btnTaBort.Size = new Size(67, 21);
             btnTaBort.TabIndex = 3;
             btnTaBort.Text = "Ta bort";
             btnTaBort.UseVisualStyleBackColor = true;
+            btnTaBort.Click += btnTaBort_Click;
             // 
             // textURL
             // 
-            textURL.Location = new Point(435, 187);
-            textURL.Margin = new Padding(3, 4, 3, 4);
+            textURL.Location = new Point(381, 140);
             textURL.Name = "textURL";
-            textURL.Size = new Size(219, 27);
+            textURL.Size = new Size(192, 23);
             textURL.TabIndex = 4;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(411, 112);
-            comboBox1.Margin = new Padding(3, 4, 3, 4);
+            comboBox1.Location = new Point(360, 84);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(159, 28);
+            comboBox1.Size = new Size(140, 23);
             comboBox1.TabIndex = 5;
             // 
             // labelURL
             // 
             labelURL.AutoSize = true;
-            labelURL.Location = new Point(385, 191);
+            labelURL.Location = new Point(337, 143);
             labelURL.Name = "labelURL";
-            labelURL.Size = new Size(35, 20);
+            labelURL.Size = new Size(28, 15);
             labelURL.TabIndex = 6;
             labelURL.Text = "URL";
             // 
             // btnAterstall
             // 
-            btnAterstall.Location = new Point(578, 112);
-            btnAterstall.Margin = new Padding(3, 4, 3, 4);
+            btnAterstall.Location = new Point(506, 84);
             btnAterstall.Name = "btnAterstall";
-            btnAterstall.Size = new Size(77, 28);
+            btnAterstall.Size = new Size(67, 21);
             btnAterstall.TabIndex = 7;
             btnAterstall.Text = "Återställ";
             btnAterstall.UseVisualStyleBackColor = true;
             // 
             // textNamn
             // 
-            textNamn.Location = new Point(80, 148);
-            textNamn.Margin = new Padding(3, 4, 3, 4);
+            textNamn.Location = new Point(70, 111);
             textNamn.Name = "textNamn";
-            textNamn.Size = new Size(219, 27);
+            textNamn.Size = new Size(192, 23);
             textNamn.TabIndex = 8;
             // 
             // cbxKategori
             // 
             cbxKategori.FormattingEnabled = true;
-            cbxKategori.Location = new Point(82, 187);
-            cbxKategori.Margin = new Padding(3, 4, 3, 4);
+            cbxKategori.Location = new Point(72, 140);
             cbxKategori.Name = "cbxKategori";
-            cbxKategori.Size = new Size(217, 28);
+            cbxKategori.Size = new Size(190, 23);
             cbxKategori.TabIndex = 10;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(847, 191);
+            label1.Location = new Point(741, 143);
             label1.Name = "label1";
-            label1.Size = new Size(54, 20);
+            label1.Size = new Size(44, 15);
             label1.TabIndex = 11;
             label1.Text = "Avsnitt";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(1109, 191);
+            label2.Location = new Point(970, 143);
             label2.Name = "label2";
-            label2.Size = new Size(66, 20);
+            label2.Size = new Size(51, 15);
             label2.TabIndex = 12;
             label2.Text = "Kategori";
             // 
             // button1
             // 
-            button1.Location = new Point(1177, 216);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(1030, 162);
             button1.Name = "button1";
-            button1.Size = new Size(77, 28);
+            button1.Size = new Size(67, 21);
             button1.TabIndex = 15;
             button1.Text = "Ta bort";
             button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            button2.Location = new Point(1094, 216);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Location = new Point(957, 162);
             button2.Name = "button2";
-            button2.Size = new Size(77, 28);
+            button2.Size = new Size(67, 21);
             button2.TabIndex = 14;
             button2.Text = "Ändra";
             button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.Location = new Point(1010, 216);
-            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Location = new Point(884, 162);
             button3.Name = "button3";
-            button3.Size = new Size(77, 28);
+            button3.Size = new Size(67, 21);
             button3.TabIndex = 13;
             button3.Text = "Lägg till";
             button3.UseVisualStyleBackColor = true;
@@ -199,38 +189,36 @@
             // listBoxKategori
             // 
             listBoxKategori.FormattingEnabled = true;
-            listBoxKategori.Location = new Point(1010, 252);
-            listBoxKategori.Margin = new Padding(3, 4, 3, 4);
+            listBoxKategori.ItemHeight = 15;
+            listBoxKategori.Location = new Point(884, 189);
             listBoxKategori.Name = "listBoxKategori";
-            listBoxKategori.Size = new Size(243, 144);
+            listBoxKategori.Size = new Size(213, 109);
             listBoxKategori.TabIndex = 16;
             // 
             // richTextBeskrivning
             // 
-            richTextBeskrivning.Location = new Point(1010, 405);
-            richTextBeskrivning.Margin = new Padding(3, 4, 3, 4);
+            richTextBeskrivning.Location = new Point(884, 304);
             richTextBeskrivning.Name = "richTextBeskrivning";
-            richTextBeskrivning.Size = new Size(243, 203);
+            richTextBeskrivning.Size = new Size(213, 153);
             richTextBeskrivning.TabIndex = 17;
             richTextBeskrivning.Text = "";
             // 
             // listBoxAvsnitt
             // 
             listBoxAvsnitt.FormattingEnabled = true;
-            listBoxAvsnitt.Location = new Point(773, 252);
-            listBoxAvsnitt.Margin = new Padding(3, 4, 3, 4);
+            listBoxAvsnitt.ItemHeight = 15;
+            listBoxAvsnitt.Location = new Point(676, 189);
             listBoxAvsnitt.Name = "listBoxAvsnitt";
-            listBoxAvsnitt.Size = new Size(215, 364);
+            listBoxAvsnitt.Size = new Size(189, 274);
             listBoxAvsnitt.TabIndex = 18;
             listBoxAvsnitt.SelectedIndexChanged += listBoxAvsnitt_SelectedIndexChanged;
             // 
             // listPodd
             // 
             listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
-            listPodd.Location = new Point(80, 252);
-            listPodd.Margin = new Padding(3, 4, 3, 4);
+            listPodd.Location = new Point(70, 189);
             listPodd.Name = "listPodd";
-            listPodd.Size = new Size(631, 364);
+            listPodd.Size = new Size(553, 274);
             listPodd.TabIndex = 19;
             listPodd.UseCompatibleStateImageBehavior = false;
             listPodd.View = View.Details;
@@ -239,7 +227,7 @@
             // namn
             // 
             namn.Text = "Namn";
-            namn.Width = 225;
+            namn.Width = 125;
             // 
             // antalAvsnitt
             // 
@@ -249,25 +237,27 @@
             // titel
             // 
             titel.Text = "Titel";
+            titel.Width = 200;
             // 
             // kategori
             // 
             kategori.Text = "Kategori";
+            kategori.Width = 100;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(82, 115);
+            label3.Location = new Point(72, 86);
             label3.Name = "label3";
-            label3.Size = new Size(50, 20);
+            label3.Size = new Size(74, 15);
             label3.TabIndex = 20;
-            label3.Text = "label3";
+            label3.Text = "Ange Namn:";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1336, 793);
+            ClientSize = new Size(1169, 595);
             Controls.Add(label3);
             Controls.Add(listPodd);
             Controls.Add(listBoxAvsnitt);
@@ -288,7 +278,6 @@
             Controls.Add(btnAndra);
             Controls.Add(btnLaggTill);
             Controls.Add(labelPodd);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
