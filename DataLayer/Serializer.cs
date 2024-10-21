@@ -25,7 +25,7 @@ namespace DataLayer
         public List<Podcast> LasInPoddar()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Podcast>));
-            string filNamn = typeof(List<Podcast>).Titel + ".xml";
+            string filNamn = typeof(List<Podcast>) .Titel + ".xml";
             if(validering.ValidXml(filNamn) && File.Exists(filNamn)) { 
 
             using (FileStream fil = File.OpenRead(filNamn))

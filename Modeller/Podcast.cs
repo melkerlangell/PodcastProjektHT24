@@ -11,11 +11,8 @@ namespace Modeller
     [Serializable]
     public class Podcast
     {
-        private string titel;
-        public string Titel {
-            get {return titel; }
-            set { titel = value; } 
-        }
+
+        public string Titel { get; set; }
         public int AntalAvsnitt { get; set; }
         
         public List<Avsnitt> poddAvsnitt { get; set; }
