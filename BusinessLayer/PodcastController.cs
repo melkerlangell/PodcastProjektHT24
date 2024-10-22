@@ -1,4 +1,7 @@
 ﻿using DataLayer.Repository;
+using Modeller;
+using System;
+using DataLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +32,7 @@ namespace BusinessLayer
         {
             poddRep.Delete(index);
         }
-        
+
         public void FetchRssPoddar(string rssLank, string egetNamn)
         {
             XmlReader minXMLlasare = XmlReader.Create(rssLank);

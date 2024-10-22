@@ -7,6 +7,7 @@ namespace GUI
     public partial class Form1 : Form
     {
         private PodcastController poddKontroll;
+        private KategoriController kategoriController;
 
 
 
@@ -16,6 +17,8 @@ namespace GUI
             InitializeComponent();
             poddKontroll = new PodcastController();
             hamtaAllaPoddar();
+            kategoriController = new KategoriController();
+            displayKat();
             richTextBeskrivning.ReadOnly = true;
         }
 
@@ -38,7 +41,18 @@ namespace GUI
             }
         }
 
+       
+        private void displayKat()
+        {
+            List<Kategori> kategorier = kategoriController.DisplayKategorier();
+            if (kategorier == null)
+                { return; }
 
+            foreach (Kategori k in kategorier)
+            {
+
+            }
+        }
 
 
         private void btnLaggTill_Click(object sender, EventArgs e)
