@@ -81,7 +81,7 @@
             btnAndra.TabIndex = 2;
             btnAndra.Text = "Ändra";
             btnAndra.UseVisualStyleBackColor = true;
-            btnAndra.Click += btnAndra_Click;
+            btnAndra.Click += (sender, e) => BtnAndraNamnClick(sender, e, textNamn.Text);
             // 
             // btnTaBort
             // 
@@ -107,6 +107,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(140, 23);
             comboBox1.TabIndex = 5;
+            comboBox1.Text = "filtrera...";
             // 
             // labelURL
             // 

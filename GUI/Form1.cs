@@ -137,5 +137,28 @@ namespace GUI
                 MessageBox.Show("Välj vilket flöde du vill ta bort");
             }
         }
+
+        public void BtnAndraNamnClick(object sender, EventArgs e, string nyttNamn)
+        {
+            if(listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
+            {
+                int valdPodd = listPodd.SelectedIndices[0];
+
+                try
+                {
+                    poddKontroll.AndraPoddNamn(valdPodd, nyttNamn);
+                    listPodd.Items.Clear();
+                    hamtaAllaPoddar();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Kunde inte ändra podden: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vänligen välj en podcast och ange ett nytt namn.", "fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }
