@@ -1,5 +1,6 @@
 using Modeller;
 using BusinessLayer;
+using System.Windows.Forms;
 
 
 namespace GUI
@@ -7,18 +8,15 @@ namespace GUI
     public partial class Form1 : Form
     {
         private PodcastController poddKontroll;
-        private KategoriController kategoriController;
-
-
-
+        private KategoriController katKontroll;
 
         public Form1()
         {
             InitializeComponent();
             poddKontroll = new PodcastController();
+            katKontroll = new KategoriController();
             hamtaAllaPoddar();
-            kategoriController = new KategoriController();
-            displayKat();
+            hamtaAllaKategorier();
             richTextBeskrivning.ReadOnly = true;
         }
 
@@ -41,23 +39,18 @@ namespace GUI
             }
         }
 
-       
-        private void displayKat()
+        private void hamtaAllaKategorier()
         {
-            listBoxKategori.Items.Clear();
-
-            List<Kategori> kategorier = kategoriController.GetAllKategorier();
-
-            if(kategorier != null && kategorier.Count > 0)
+            List<Kategori> kategorier = katKontroll.getKategorier();
+            if (kategorier == null)
             {
-                foreach(Kategori kat in kategorier)
-                {
-                    listBoxKategori.Items.Add(kat.Namn);
-                }
+                return;
             }
-            else
+
+            foreach (Kategori k in kategorier)
             {
-                listBoxKategori.Items.Add("Inga kategorier tillgängliga");
+                listBoxKategori.Items.Add(k.Namn);
+                cbxKategori.Items.Add(k.Namn);
             }
         }
 
@@ -66,10 +59,11 @@ namespace GUI
         {
             string url = textURL.Text;
             string egetNamn = textNamn.Text;
+            string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
             try
             {
-                poddKontroll.FetchRssPoddar(url, egetNamn);
+                poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
 
                 listPodd.Items.Clear();
                 hamtaAllaPoddar();
@@ -145,9 +139,13 @@ namespace GUI
             }
         }
 
-        public void BtnAndraNamnClick(object sender, EventArgs e, string nyttNamn)
+
+
+        private void btnAndra_Click_1(object sender, EventArgs e)
         {
-            if(listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
+            string nyttNamn = textNamn.Text;
+            
+            if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
             {
                 int valdPodd = listPodd.SelectedIndices[0];
 
@@ -165,6 +163,63 @@ namespace GUI
             else
             {
                 MessageBox.Show("Vänligen välj en podcast och ange ett nytt namn.", "fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void uppdateraListaOchCbx(string kategori)
+        {
+            cbxKategori.Items.Add(kategori);
+            listBoxKategori.Items.Add(kategori);
+        }
+
+        private void uppdateraListaOchCbx(int index)
+        {
+            cbxKategori.Items.RemoveAt(index);
+            listBoxKategori.Items.RemoveAt(index);
+        }
+
+
+
+        private void DeleteKategori_Click(object sender, EventArgs e)
+        {
+            int valdKategori = listBoxKategori.SelectedIndex;
+
+            if (valdKategori != -1)
+            {
+                katKontroll.TaBortKategori(valdKategori);
+                uppdateraListaOchCbx(valdKategori);
+                listPodd.Items.Clear();
+                hamtaAllaPoddar();
+
+            }
+        }
+
+        private void AddKategori_Click(object sender, EventArgs e)
+        {
+            string nyKategori = textBoxKategori.Text;
+
+
+            if (!string.IsNullOrWhiteSpace(nyKategori))
+            {
+                katKontroll.LaggTillKat(nyKategori);
+                uppdateraListaOchCbx(nyKategori);
+            }
+        }
+
+        private void EditKategori_Click(object sender, EventArgs e)
+        {
+            string nyttNamn = textBoxKategori.Text;
+            int valdKategori = listBoxKategori.SelectedIndex;
+
+            if (!string.IsNullOrWhiteSpace(nyttNamn))
+            {
+                katKontroll.AndraKategoriNamn(valdKategori, nyttNamn);
+                listBoxKategori.Items.Clear();
+                cbxKategori.Items.Clear();
+                hamtaAllaKategorier();
+                listPodd.Items.Clear();
+                hamtaAllaPoddar();
+
             }
         }
     }

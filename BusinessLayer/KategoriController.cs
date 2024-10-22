@@ -1,61 +1,61 @@
 ﻿using DataLayer.Repository;
 using Modeller;
 using System;
-using DataLayer.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLayer
 {
     public class KategoriController
     {
-        private KategoriRepository kategoriRep;
+        private KategoriRepository katRep;
+        private PodcastController poddKontroll; 
 
         public KategoriController()
         {
-            kategoriRep = new KategoriRepository();
+            katRep = new KategoriRepository();
+            poddKontroll = new PodcastController(); 
         }
 
-
-        public List<Kategori> GetAllKategorier()
+        public List<Kategori> getKategorier()
         {
-            return kategoriRep.GetAll();
+            return katRep.GetAll();
         }
 
-        public Kategori GetKategori(string namn)
+        public void LaggTillKat(string katNamn)
         {
-            return kategoriRep.GetByID(namn);
+            Kategori k = new Kategori();
+            k.Namn = katNamn;
+            katRep.Insert(k);
+        }
+
+        public void AndraKategoriNamn(int i, string nyttNamn)
+        {
+            List<Kategori> kategorier = katRep.GetAll();
+            if (i >= 0 && i < kategorier.Count)
+            {
+                string gammaltNamn = kategorier[i].Namn;
+                kategorier[i].Namn = nyttNamn;
+                katRep.Update(i, kategorier[i]);
+
+                poddKontroll.UppdateraPodcastsKategori(gammaltNamn, nyttNamn);
+            }
         }
 
         public void TaBortKategori(int index)
         {
-            kategoriRep.Delete(index); 
-        }
+            List<Kategori> kategorier = katRep.GetAll();
+            if (index >= 0 && index < kategorier.Count)
+            {
+                string gammalKategori = kategorier[index].Namn;
+                katRep.Delete(index);
 
-        public void AndraKategori(int index, string nyttNamn)
-        {
-            Kategori enKategori = new Kategori(nyttNamn);
-            kategoriRep.Update(index, enKategori);
-        }
-
-        public void LaggTillKategori(string namn){
-
-            Kategori nyKategori = new Kategori(namn);
-            kategoriRep.Insert(nyKategori);
-            
+                poddKontroll.UppdateraPodcastsKategori(gammalKategori, "Ingen kategori");
+            }
         }
     }
-
-
-
-
-
-
 }
-

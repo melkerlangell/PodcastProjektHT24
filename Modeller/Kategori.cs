@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modeller
 {
+    [Serializable]
     public class Kategori
     {
         private string namn;
@@ -21,11 +22,7 @@ namespace Modeller
         }
 
 
-        public string Namn
-        {
-            get; set;
-
-        }
+        public string Namn{get; set;}
 
 
     }

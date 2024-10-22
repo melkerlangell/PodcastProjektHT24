@@ -40,9 +40,9 @@
             cbxKategori = new ComboBox();
             label1 = new Label();
             label2 = new Label();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            DeleteKategori = new Button();
+            EditKategori = new Button();
+            AddKategori = new Button();
             listBoxKategori = new ListBox();
             richTextBeskrivning = new RichTextBox();
             listBoxAvsnitt = new ListBox();
@@ -52,6 +52,8 @@
             titel = new ColumnHeader();
             kategori = new ColumnHeader();
             label3 = new Label();
+            textBoxKategori = new TextBox();
+            labelKategori = new Label();
             SuspendLayout();
             // 
             // labelPodd
@@ -81,7 +83,7 @@
             btnAndra.TabIndex = 2;
             btnAndra.Text = "Ändra";
             btnAndra.UseVisualStyleBackColor = true;
-            btnAndra.Click += (sender, e) => BtnAndraNamnClick(sender, e, textNamn.Text);
+            btnAndra.Click += btnAndra_Click_1;
             // 
             // btnTaBort
             // 
@@ -154,38 +156,41 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(970, 143);
+            label2.Location = new Point(973, 119);
             label2.Name = "label2";
             label2.Size = new Size(51, 15);
             label2.TabIndex = 12;
             label2.Text = "Kategori";
             // 
-            // button1
+            // DeleteKategori
             // 
-            button1.Location = new Point(1030, 162);
-            button1.Name = "button1";
-            button1.Size = new Size(67, 21);
-            button1.TabIndex = 15;
-            button1.Text = "Ta bort";
-            button1.UseVisualStyleBackColor = true;
+            DeleteKategori.Location = new Point(1103, 265);
+            DeleteKategori.Name = "DeleteKategori";
+            DeleteKategori.Size = new Size(67, 21);
+            DeleteKategori.TabIndex = 15;
+            DeleteKategori.Text = "Ta bort";
+            DeleteKategori.UseVisualStyleBackColor = true;
+            DeleteKategori.Click += DeleteKategori_Click;
             // 
-            // button2
+            // EditKategori
             // 
-            button2.Location = new Point(957, 162);
-            button2.Name = "button2";
-            button2.Size = new Size(67, 21);
-            button2.TabIndex = 14;
-            button2.Text = "Ändra";
-            button2.UseVisualStyleBackColor = true;
+            EditKategori.Location = new Point(1103, 238);
+            EditKategori.Name = "EditKategori";
+            EditKategori.Size = new Size(67, 21);
+            EditKategori.TabIndex = 14;
+            EditKategori.Text = "Ändra";
+            EditKategori.UseVisualStyleBackColor = true;
+            EditKategori.Click += EditKategori_Click;
             // 
-            // button3
+            // AddKategori
             // 
-            button3.Location = new Point(884, 162);
-            button3.Name = "button3";
-            button3.Size = new Size(67, 21);
-            button3.TabIndex = 13;
-            button3.Text = "Lägg till";
-            button3.UseVisualStyleBackColor = true;
+            AddKategori.Location = new Point(1103, 211);
+            AddKategori.Name = "AddKategori";
+            AddKategori.Size = new Size(67, 21);
+            AddKategori.TabIndex = 13;
+            AddKategori.Text = "Lägg till";
+            AddKategori.UseVisualStyleBackColor = true;
+            AddKategori.Click += AddKategori_Click;
             // 
             // listBoxKategori
             // 
@@ -254,19 +259,37 @@
             label3.TabIndex = 20;
             label3.Text = "Ange Namn:";
             // 
+            // textBoxKategori
+            // 
+            textBoxKategori.Location = new Point(961, 160);
+            textBoxKategori.Name = "textBoxKategori";
+            textBoxKategori.Size = new Size(136, 23);
+            textBoxKategori.TabIndex = 21;
+            // 
+            // labelKategori
+            // 
+            labelKategori.AutoSize = true;
+            labelKategori.Location = new Point(884, 163);
+            labelKategori.Name = "labelKategori";
+            labelKategori.Size = new Size(71, 15);
+            labelKategori.TabIndex = 22;
+            labelKategori.Text = "Ny kategori:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1169, 595);
+            Controls.Add(labelKategori);
+            Controls.Add(textBoxKategori);
             Controls.Add(label3);
             Controls.Add(listPodd);
             Controls.Add(listBoxAvsnitt);
             Controls.Add(richTextBeskrivning);
             Controls.Add(listBoxKategori);
-            Controls.Add(button1);
-            Controls.Add(button2);
-            Controls.Add(button3);
+            Controls.Add(DeleteKategori);
+            Controls.Add(EditKategori);
+            Controls.Add(AddKategori);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(cbxKategori);
@@ -299,9 +322,9 @@
         private ComboBox cbxKategori;
         private Label label1;
         private Label label2;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button DeleteKategori;
+        private Button EditKategori;
+        private Button AddKategori;
         private ListBox listBoxKategori;
         private RichTextBox richTextBeskrivning;
         private ListBox listBoxAvsnitt;
@@ -311,5 +334,7 @@
         private ColumnHeader titel;
         private Label label3;
         private ColumnHeader kategori;
+        private TextBox textBoxKategori;
+        private Label labelKategori;
     }
 }

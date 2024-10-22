@@ -10,54 +10,51 @@ namespace DataLayer.Repository
     public class KategoriRepository : IRepository<Kategori>
     {
         Serializer<Kategori> Serializer;
-        List<Kategori> ListKategori;
+        List<Kategori> ListKategorier;
 
         public KategoriRepository()
         {
             Serializer = new Serializer<Kategori>();
-            ListKategori = new List<Kategori>();
-            ListKategori = GetAll();
+            ListKategorier = Serializer.LasInKategorier() ?? new List<Kategori>();
         }
-
         public List<Kategori> GetAll()
         {
-            return Serializer.LasInPoddar();
+            return Serializer.LasInKategorier();
         }
-
-        public Kategori GetByID(string namn)
+        public Kategori GetByID(string id)
         {
-            Kategori katt = null;
-            foreach (var item in Serializer.LasInPoddar())
+            Kategori kat = null;
+            foreach (var item in Serializer.LasInKategorier())
             {
-                if (item.Namn.Equals(namn))
+                if (item.Namn.Equals(id))
                 {
-                    katt = item;
+                    kat = item;
                 }
             }
-            return katt;
+            return kat;
         }
         public void Insert(Kategori theObject)
         {
-            ListKategori.Add(theObject);
+            ListKategorier = Serializer.LasInKategorier() ?? new List<Kategori>();
+            ListKategorier.Add(theObject);
             SaveChanges();
         }
         public void Update(int index, Kategori theNewObject)
         {
-            if (index >= 0 && index < ListKategori.Count)
+            if (index >= 0 && index < ListKategorier.Count)
             {
-                ListKategori[index] = theNewObject;
+                ListKategorier[index] = theNewObject;
+                SaveChanges();
             }
-            SaveChanges();
         }
         public void Delete(int index)
         {
-            ListKategori.RemoveAt(index);
+            ListKategorier.RemoveAt(index);
             SaveChanges();
         }
         public void SaveChanges()
         {
-            Serializer.SparaPoddar(ListKategori);
+            Serializer.SparaKategorier(ListKategorier);
         }
     }
-
 }

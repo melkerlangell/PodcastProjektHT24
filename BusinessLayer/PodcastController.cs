@@ -1,6 +1,4 @@
-﻿using DataLayer.Repository;
-using Modeller;
-using System;
+﻿using System;
 using DataLayer.Repository;
 using System;
 using System.Collections.Generic;
@@ -30,19 +28,19 @@ namespace BusinessLayer
         public void AndraPoddNamn(int i, string nyttNamn)
         {
             List<Podcast> poddar = poddRep.GetAll();
-            if(i >= 0 && i < poddar.Count) {
+            if (i >= 0 && i < poddar.Count)
+            {
                 poddar[i].EgetNamn = nyttNamn;
                 poddRep.Update(i, poddar[i]);
             }
         }
-
 
         public void TaBortPodd(int index)
         {
             poddRep.Delete(index);
         }
 
-        public void FetchRssPoddar(string rssLank, string egetNamn)
+        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori)
         {
             XmlReader minXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
@@ -50,6 +48,7 @@ namespace BusinessLayer
             Podcast enPodd = new Podcast();
             enPodd.Titel = poddFlode.Title.Text;
             enPodd.EgetNamn = egetNamn;
+            enPodd.Kategori = kategori;
 
             foreach (SyndicationItem item in poddFlode.Items)
             {
@@ -64,6 +63,21 @@ namespace BusinessLayer
             enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
 
             poddRep.Insert(enPodd);
+        }
+
+        
+        public void UppdateraPodcastsKategori(string gammalKategori, string nyKategori)
+        {
+            List<Podcast> poddar = poddRep.GetAll();
+
+            foreach (var podd in poddar)
+            {
+                if (podd.Kategori == gammalKategori)
+                {
+                    podd.Kategori = nyKategori;
+                    poddRep.Update(poddar.IndexOf(podd), podd); 
+                }
+            }
         }
     }
 }

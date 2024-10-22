@@ -8,6 +8,8 @@ namespace DataLayer
     public class Serializer<T>
     {
         private string filNamn = Path.Combine(Directory.GetCurrentDirectory(), "poddar.xml");
+        private string filKategorier = Path.Combine(Directory.GetCurrentDirectory(), "allakategorier.xml");
+
 
         public Serializer()
         {
@@ -38,6 +40,30 @@ namespace DataLayer
             using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
             {
                 return (List<T>)serializer.Deserialize(fil); 
+            }
+        }
+
+        public void SparaKategorier(List<T> allaKategorier)
+        {
+            XmlSerializer serializer = new XmlSerializer (typeof(List<T>));
+            using(FileStream fil = new FileStream(filKategorier, FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(fil, allaKategorier);
+            }
+        }
+
+        public List<T> LasInKategorier()
+        {
+            if (!File.Exists(filKategorier))
+            {
+                return null;
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+            using (FileStream fil = new FileStream(filKategorier, FileMode.Open, FileAccess.Read))
+            {
+                return (List<T>)serializer.Deserialize(fil);
             }
         }
     }
