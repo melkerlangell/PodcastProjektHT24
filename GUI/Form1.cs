@@ -119,7 +119,7 @@ namespace GUI
                 try
                 {
                     int valdPodd = listPodd.SelectedIndices[0];
-                    var bekraftaVal = MessageBox.Show("Är du säker på att du vill ta bort flödet?", "Bekräfta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var bekraftaVal = MessageBox.Show("Är du säker på att du vill ta bort flödet?", "Bekräfta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (bekraftaVal == DialogResult.Yes)
                     {
@@ -186,11 +186,19 @@ namespace GUI
 
             if (valdKategori != -1)
             {
-                katKontroll.TaBortKategori(valdKategori);
-                uppdateraListaOchCbx(valdKategori);
-                listPodd.Items.Clear();
-                hamtaAllaPoddar();
+                DialogResult dialogResult = MessageBox.Show("Är du säker på att du vill ta bort denna kategori?", "Bekräfta borttagning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                if (dialogResult == DialogResult.Yes)
+                {
+                    katKontroll.TaBortKategori(valdKategori);
+                    uppdateraListaOchCbx(valdKategori);
+                    listPodd.Items.Clear();
+                    hamtaAllaPoddar();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vänligen välj en kategori att ta bort.", "Ingen kategori vald", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
