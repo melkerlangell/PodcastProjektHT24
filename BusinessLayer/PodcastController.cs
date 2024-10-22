@@ -24,6 +24,15 @@ namespace BusinessLayer
             return poddRep.GetAll();
         }
 
+        public void AndraPoddNamn(int i, string nyttNamn)
+        {
+            List<Podcast> poddar = poddRep.GetAll();
+            if(i >= 0 && i < poddar.Count) {
+                poddar[i].EgetNamn = nyttNamn;
+                poddRep.Update(i, poddar[i]);
+            }
+        }
+
 
         public void TaBortPodd(int index)
         {
