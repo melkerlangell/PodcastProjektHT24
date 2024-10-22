@@ -8,43 +8,25 @@ namespace Modeller
 {
     public class Kategori
     {
-        public List<String> KategoriList = new List<String>();
-        public string Titel { get; set; }
+        private string namn;
 
-
-
+        public Kategori(string namn)
+        {
+            this.namn = namn;
+        }
 
         public Kategori()
         {
-            KategoriList.Add("Humor");
-            KategoriList.Add("Sport");
-            KategoriList.Add("Kultur");
+
         }
 
-     
-        public void TaBortKatergori(String kategori)
+
+        public string Namn
         {
-            foreach (String item in KategoriList)
-            {
-                if (item == kategori)
-                {
-                    int Index = KategoriList.IndexOf(item);
-                    KategoriList.RemoveAt(Index);
-
-                }
-            }
+            get; set;
 
         }
-
-     
-
-    
-
- 
 
 
     }
-
-   
-
 }

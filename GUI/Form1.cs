@@ -44,13 +44,20 @@ namespace GUI
        
         private void displayKat()
         {
-            List<Kategori> kategorier = kategoriController.DisplayKategorier();
-            if (kategorier == null)
-                { return; }
+            listBoxKategori.Items.Clear();
 
-            foreach (Kategori k in kategorier)
+            List<Kategori> kategorier = kategoriController.GetAllKategorier();
+
+            if(kategorier != null && kategorier.Count > 0)
             {
-
+                foreach(Kategori kat in kategorier)
+                {
+                    listBoxKategori.Items.Add(kat.Namn);
+                }
+            }
+            else
+            {
+                listBoxKategori.Items.Add("Inga kategorier tillgängliga");
             }
         }
 

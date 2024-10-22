@@ -15,7 +15,8 @@ namespace DataLayer.Repository
         public KategoriRepository()
         {
             Serializer = new Serializer<Kategori>();
-            ListKategori = Serializer.LasInPoddar() ?? new List<Kategori>();
+            ListKategori = new List<Kategori>();
+            ListKategori = GetAll();
         }
 
         public List<Kategori> GetAll()
@@ -23,12 +24,12 @@ namespace DataLayer.Repository
             return Serializer.LasInPoddar();
         }
 
-        public Kategori GetByID(string id)
+        public Kategori GetByID(string namn)
         {
             Kategori katt = null;
             foreach (var item in Serializer.LasInPoddar())
             {
-                if (item.Titel.Equals(id))
+                if (item.Namn.Equals(namn))
                 {
                     katt = item;
                 }
@@ -37,7 +38,6 @@ namespace DataLayer.Repository
         }
         public void Insert(Kategori theObject)
         {
-            ListKategori = Serializer.LasInPoddar() ?? new List<Kategori>();
             ListKategori.Add(theObject);
             SaveChanges();
         }
@@ -46,8 +46,8 @@ namespace DataLayer.Repository
             if (index >= 0 && index < ListKategori.Count)
             {
                 ListKategori[index] = theNewObject;
-                SaveChanges();
             }
+            SaveChanges();
         }
         public void Delete(int index)
         {

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace Modeller
 {
-    [Serializable]
+    [XmlRoot(ElementName = "Podcast")]
     public class Podcast
     {
         public string Titel { get; set; }

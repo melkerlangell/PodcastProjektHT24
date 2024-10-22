@@ -9,7 +9,6 @@ using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Modeller;
 using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLayer
@@ -24,29 +23,31 @@ namespace BusinessLayer
         }
 
 
-        public void DisplayKategorier()
+        public List<Kategori> GetAllKategorier()
         {
-            List<Kategori> kategorier = kategoriRep.GetAll();
+            return kategoriRep.GetAll();
         }
+
+        public Kategori GetKategori(string namn)
+        {
+            return kategoriRep.GetByID(namn);
+        }
+
         public void TaBortKategori(int index)
         {
             kategoriRep.Delete(index); 
         }
 
-        public void AndraKategori(int index, Kategori nyKategori)
+        public void AndraKategori(int index, string nyttNamn)
         {
-
-            List<Kategori> kategorier = kategoriRep.GetAll();
-
-            if (kategorier != null && index >= 0 && index < kategorier.Count)
-            {
-                kategorier[index] = nyKategori;
-            }
+            Kategori enKategori = new Kategori(nyttNamn);
+            kategoriRep.Update(index, enKategori);
         }
 
-        public void LaggTillKategori(Kategori kategori){
+        public void LaggTillKategori(string namn){
 
-            kategoriRep.Insert(kategori);
+            Kategori nyKategori = new Kategori(namn);
+            kategoriRep.Insert(nyKategori);
             
         }
     }
@@ -57,4 +58,4 @@ namespace BusinessLayer
 
 
 }
-}
+
