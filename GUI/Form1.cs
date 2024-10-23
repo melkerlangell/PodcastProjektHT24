@@ -110,6 +110,10 @@ namespace GUI
         private void btnAndra_Click(object sender, EventArgs e)
         {
 
+
+
+
+
         }
 
         private void btnTaBort_Click(object sender, EventArgs e)
@@ -143,26 +147,42 @@ namespace GUI
 
         private void btnAndra_Click_1(object sender, EventArgs e)
         {
-            string nyttNamn = textNamn.Text;
-            
-            if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
+            string nyttNamn = textNamn.Text;  // Nytt namn för podcasten
+            string nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
+
+            if (listPodd.SelectedItems.Count > 0)
             {
-                int valdPodd = listPodd.SelectedIndices[0];
+                int valdPoddIndex = listPodd.SelectedIndices[0];  // Hämta indexet för den valda podcasten
 
                 try
                 {
-                    poddKontroll.AndraPoddNamn(valdPodd, nyttNamn);
+                    // Om ett nytt namn har angetts, uppdatera namnet
+                    if (!string.IsNullOrWhiteSpace(nyttNamn))
+                    {
+                        poddKontroll.AndraPoddNamn(valdPoddIndex, nyttNamn);
+                    }
+
+                    // Om en ny kategori har valts, uppdatera kategorin
+                    if (!string.IsNullOrWhiteSpace(nyKategori))
+                    {
+                        katKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
+                    }
+
+                    // Uppdatera ändringar
                     listPodd.Items.Clear();
-                    hamtaAllaPoddar();
+                    hamtaAllaPoddar();       
+                    cbxKategori.Items.Clear();
+                    listBoxKategori.Items.Clear();
+                    hamtaAllaKategorier();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Kunde inte ändra podden: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Kunde inte uppdatera podden: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Vänligen välj en podcast och ange ett nytt namn.", "fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vänligen välj en podcast och ange ett nytt namn eller en kategori.", "Fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -65,7 +65,21 @@ namespace BusinessLayer
             poddRep.Insert(enPodd);
         }
 
-        
+
+        public void AndraPoddKategori(int podcastIndex, string nyKategori)
+         {
+            List<Podcast> poddar = poddRep.GetAll();
+            if (podcastIndex >= 0 && podcastIndex < poddar.Count)
+            {
+                Podcast valdPodd = poddar[podcastIndex];
+                valdPodd.Kategori = nyKategori;
+
+            }
+        }
+
+
+
+
         public void UppdateraPodcastsKategori(string gammalKategori, string nyKategori)
         {
             List<Podcast> poddar = poddRep.GetAll();
