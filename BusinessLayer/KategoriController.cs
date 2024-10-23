@@ -59,11 +59,11 @@ namespace BusinessLayer
         }
 
 
-        public void AndraPoddKategori(int podcastIndex, string nyKategori)
-        {
-            // Anropa funktionen från PodcastController för att uppdatera kategorin
-            poddKontroll.AndraPoddKategori(podcastIndex, nyKategori);
-        }
+        //public void AndraPoddKategori(int podcastIndex, string nyKategori)
+        //{
+        //    // Anropa funktionen från PodcastController för att uppdatera kategorin
+        //    poddKontroll.AndraPoddKategori(podcastIndex, nyKategori);
+        //}
 
 
 

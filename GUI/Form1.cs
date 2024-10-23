@@ -109,14 +109,7 @@ namespace GUI
             }
         }
 
-        private void btnAndra_Click(object sender, EventArgs e)
-        {
-
-
-
-
-
-        }
+        
 
         private void btnTaBort_Click(object sender, EventArgs e)
         {
@@ -168,7 +161,7 @@ namespace GUI
                     // Om en ny kategori har valts, uppdatera kategorin
                     if (!string.IsNullOrWhiteSpace(nyKategori))
                     {
-                        katKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
+                        poddKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
                     }
 
                     // Uppdatera ändringar
@@ -255,48 +248,6 @@ namespace GUI
                 hamtaAllaPoddar();
 
             }
-        }
-
-        private void FiltreraKategori()
-        {
-            string valdKategori = comboBox1.SelectedItem?.ToString();
-
-            if (valdKategori is not null)
-            {
-                listPodd.Items.Clear();
-                List<Podcast> poddar = poddKontroll.getPoddar();
-
-                foreach (Podcast p in poddar)
-                {
-                    if (p.Kategori == valdKategori)
-                    {
-                        ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
-                        podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-                        podcastItem.SubItems.Add(p.Titel);
-                        podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
-
-                        listPodd.Items.Add(podcastItem);
-                    }
-
-                }
-
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FiltreraKategori();
-        }
-
-        private void listBoxKategori_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnAterstall_Click(object sender, EventArgs e)
-        {
-            listPodd.Items.Clear();
-            hamtaAllaPoddar();
         }
 
         private void FiltreraKategori()
