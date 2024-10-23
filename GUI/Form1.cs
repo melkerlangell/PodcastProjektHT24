@@ -150,7 +150,8 @@ namespace GUI
         private void btnAndra_Click_1(object sender, EventArgs e)
         {
             string nyttNamn = textNamn.Text;
-            
+            string nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
+
             if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
 
             {
