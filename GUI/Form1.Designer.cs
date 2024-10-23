@@ -110,6 +110,7 @@
             comboBox1.Size = new Size(140, 23);
             comboBox1.TabIndex = 5;
             comboBox1.Text = "filtrera...";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // labelURL
             // 
@@ -128,6 +129,7 @@
             btnAterstall.TabIndex = 7;
             btnAterstall.Text = "Återställ";
             btnAterstall.UseVisualStyleBackColor = true;
+            btnAterstall.Click += btnAterstall_Click;
             // 
             // textNamn
             // 
@@ -200,6 +202,7 @@
             listBoxKategori.Name = "listBoxKategori";
             listBoxKategori.Size = new Size(213, 109);
             listBoxKategori.TabIndex = 16;
+            listBoxKategori.SelectedIndexChanged += listBoxKategori_SelectedIndexChanged;
             // 
             // richTextBeskrivning
             // 
