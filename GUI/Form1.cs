@@ -2,6 +2,7 @@ using Modeller;
 using BusinessLayer;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace GUI
@@ -16,8 +17,10 @@ namespace GUI
             InitializeComponent();
             poddKontroll = new PodcastController();
             katKontroll = new KategoriController();
+            
             hamtaAllaPoddar();
             hamtaAllaKategorier();
+            resetFalt();
             richTextBeskrivning.ReadOnly = true;
         }
 
@@ -52,7 +55,7 @@ namespace GUI
             {
                 listBoxKategori.Items.Add(k.Namn);
                 cbxKategori.Items.Add(k.Namn);
-                comboBox1.Items.Add(k.Namn);
+                comboBoxFiltrera.Items.Add(k.Namn);
             }
         }
 
@@ -76,7 +79,7 @@ namespace GUI
                 MessageBox.Show($"Error vid hämtning av poddar {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            textURL.Clear();
+            resetFalt();
 
         }
 
@@ -136,49 +139,84 @@ namespace GUI
             {
                 MessageBox.Show("Välj vilket flöde du vill ta bort");
             }
+            resetFalt();
+        }
+
+        private Boolean andraKategoriForPodd()
+        {
+            
+            string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
+            bool flagga = false;
+
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(nyKategori))
+                {
+                    int valdPoddIndex = listPodd.SelectedIndices[0];  // Hämta indexet för den valda podcasten
+                    poddKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
+
+                    flagga = true;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return flagga;
         }
 
 
-
-        private void btnAndra_Click_1(object sender, EventArgs e)
+        private Boolean andraNamnPodcast()
         {
             string nyttNamn = textNamn.Text;
-            string nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
+            bool flagga = false;
 
-            if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
-
+            try
             {
-                int valdPoddIndex = listPodd.SelectedIndices[0];  // Hämta indexet för den valda podcasten
-
-                try
+                if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
                 {
+                    int valdPoddIndex = listPodd.SelectedIndices[0];  // Hämta indexet för den valda podcasten
                     // Om ett nytt namn har angetts, uppdatera namnet
                     if (!string.IsNullOrWhiteSpace(nyttNamn))
                     {
                         poddKontroll.AndraPoddNamn(valdPoddIndex, nyttNamn);
+                        flagga = true;
                     }
-
-                    // Om en ny kategori har valts, uppdatera kategorin
-                    if (!string.IsNullOrWhiteSpace(nyKategori))
-                    {
-                        poddKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
-                    }
-
-                    // Uppdatera ändringar
-                    listPodd.Items.Clear();
-                    hamtaAllaPoddar();       
-                    cbxKategori.Items.Clear();
-                    listBoxKategori.Items.Clear();
-                    hamtaAllaKategorier();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Kunde inte uppdatera podden: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return flagga;
+        }
+
+
+        private void uppdateraPoddLista()
+        {
+            listPodd.Items.Clear();
+            hamtaAllaPoddar();
+            cbxKategori.Items.Clear();
+            listBoxKategori.Items.Clear();
+            comboBoxFiltrera.Items.Clear();
+            hamtaAllaKategorier();
+        }
+
+
+        private void btnAndra_Click_1(object sender, EventArgs e)
+        {
+            bool namnAndrat = andraNamnPodcast();    
+            bool kategoriAndrad = andraKategoriForPodd(); 
+
+            if (namnAndrat || kategoriAndrad)
+            {
+                uppdateraPoddLista();
+                resetFalt();         
             }
             else
             {
-                MessageBox.Show("Vänligen välj en podcast och ange ett nytt namn eller en kategori.", "Fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Välj en podcast i listan och ändra egenskaper innan du sparar",
+                                "Fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -186,14 +224,14 @@ namespace GUI
         {
             cbxKategori.Items.Add(kategori);
             listBoxKategori.Items.Add(kategori);
-            comboBox1.Items.Add(kategori);
+            comboBoxFiltrera.Items.Add(kategori);
         }
 
         private void uppdateraListaOchCbx(int index)
         {
             cbxKategori.Items.RemoveAt(index);
             listBoxKategori.Items.RemoveAt(index);
-            comboBox1.Items.RemoveAt(index);
+            comboBoxFiltrera.Items.RemoveAt(index);
         }
 
 
@@ -242,7 +280,7 @@ namespace GUI
                 katKontroll.AndraKategoriNamn(valdKategori, nyttNamn);
                 listBoxKategori.Items.Clear();
                 cbxKategori.Items.Clear();
-                comboBox1.Items.Clear();
+                comboBoxFiltrera.Items.Clear();
                 hamtaAllaKategorier();
                 listPodd.Items.Clear();
                 hamtaAllaPoddar();
@@ -252,7 +290,7 @@ namespace GUI
 
         private void FiltreraKategori()
         {
-            string valdKategori = comboBox1.SelectedItem?.ToString();
+            string valdKategori = comboBoxFiltrera.SelectedItem?.ToString();
 
             if (valdKategori is not null)
             {
@@ -288,8 +326,20 @@ namespace GUI
 
         private void btnAterstall_Click(object sender, EventArgs e)
         {
+            resetFalt();
+
+        }
+
+
+        private void resetFalt()
+        {
             listPodd.Items.Clear();
             hamtaAllaPoddar();
+            string text = "filtrera...";
+            comboBoxFiltrera.Text = text;
+            textNamn.Text = "";
+            string text1 = "Välj kategori";
+            cbxKategori.Text = text1;
         }
     }
 }

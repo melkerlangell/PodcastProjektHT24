@@ -73,6 +73,7 @@ namespace BusinessLayer
             {
                 Podcast valdPodd = poddar[podcastIndex];
                 valdPodd.Kategori = nyKategori;
+                poddRep.Update(podcastIndex, valdPodd);
 
             }
         }

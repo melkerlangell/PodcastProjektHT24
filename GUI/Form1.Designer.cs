@@ -33,7 +33,7 @@
             btnAndra = new Button();
             btnTaBort = new Button();
             textURL = new TextBox();
-            comboBox1 = new ComboBox();
+            comboBoxFiltrera = new ComboBox();
             labelURL = new Label();
             btnAterstall = new Button();
             textNamn = new TextBox();
@@ -102,15 +102,15 @@
             textURL.Size = new Size(192, 23);
             textURL.TabIndex = 4;
             // 
-            // comboBox1
+            // comboBoxFiltrera
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(360, 84);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(140, 23);
-            comboBox1.TabIndex = 5;
-            comboBox1.Text = "filtrera...";
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            comboBoxFiltrera.FormattingEnabled = true;
+            comboBoxFiltrera.Location = new Point(360, 84);
+            comboBoxFiltrera.Name = "comboBoxFiltrera";
+            comboBoxFiltrera.Size = new Size(140, 23);
+            comboBoxFiltrera.TabIndex = 5;
+            comboBoxFiltrera.Text = "filtrera...";
+            comboBoxFiltrera.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // labelURL
             // 
@@ -225,6 +225,7 @@
             // listPodd
             // 
             listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
+            listPodd.FullRowSelect = true;
             listPodd.Location = new Point(70, 189);
             listPodd.Name = "listPodd";
             listPodd.Size = new Size(553, 274);
@@ -299,14 +300,14 @@
             Controls.Add(textNamn);
             Controls.Add(btnAterstall);
             Controls.Add(labelURL);
-            Controls.Add(comboBox1);
+            Controls.Add(comboBoxFiltrera);
             Controls.Add(textURL);
             Controls.Add(btnTaBort);
             Controls.Add(btnAndra);
             Controls.Add(btnLaggTill);
             Controls.Add(labelPodd);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Podcast";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -318,7 +319,7 @@
         private Button btnAndra;
         private Button btnTaBort;
         private TextBox textURL;
-        private ComboBox comboBox1;
+        private ComboBox comboBoxFiltrera;
         private Label labelURL;
         private Button btnAterstall;
         private TextBox textNamn;
