@@ -294,7 +294,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1169, 595);
+            ClientSize = new Size(1195, 658);
             Controls.Add(labelPodd);
             Controls.Add(labelKategori);
             Controls.Add(textBoxKategori);
