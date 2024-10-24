@@ -239,7 +239,7 @@ namespace GUI
         private void DeleteKategori_Click(object sender, EventArgs e)
         {
             int valdKategori = listBoxKategori.SelectedIndex;
-
+            string nyttNamn = "";
             if (valdKategori != -1)
             {
                 DialogResult dialogResult = MessageBox.Show("Är du säker på att du vill ta bort denna kategori?", "Bekräfta borttagning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -247,6 +247,7 @@ namespace GUI
                 if (dialogResult == DialogResult.Yes)
                 {
                     katKontroll.TaBortKategori(valdKategori);
+                    poddKontroll.AndraPoddKategori(valdKategori, nyttNamn);
                     uppdateraListaOchCbx(valdKategori);
                     listPodd.Items.Clear();
                     hamtaAllaPoddar();
@@ -279,13 +280,14 @@ namespace GUI
             if (!string.IsNullOrWhiteSpace(nyttNamn))
             {
                 katKontroll.AndraKategoriNamn(valdKategori, nyttNamn);
+                poddKontroll.AndraPoddKategori(valdKategori, nyttNamn);
                 listBoxKategori.Items.Clear();
                 cbxKategori.Items.Clear();
                 comboBoxFiltrera.Items.Clear();
                 hamtaAllaKategorier();
                 listPodd.Items.Clear();
                 hamtaAllaPoddar();
-
+                
             }
         }
 

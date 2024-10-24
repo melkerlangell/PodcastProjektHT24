@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Modeller;
+using System.Xml.Schema;
 
 namespace BusinessLayer
 {
@@ -69,13 +70,13 @@ namespace BusinessLayer
         public void AndraPoddKategori(int podcastIndex, string nyKategori)
          {
             List<Podcast> poddar = poddRep.GetAll();
-            if (podcastIndex >= 0 && podcastIndex < poddar.Count)
-            {
-                Podcast valdPodd = poddar[podcastIndex];
-                valdPodd.Kategori = nyKategori;
-                poddRep.Update(podcastIndex, valdPodd);
+                if (podcastIndex >= 0 && podcastIndex < poddar.Count)
+                {
+                    Podcast valdPodd = poddar[podcastIndex];
+                    valdPodd.Kategori = nyKategori;
+                    poddRep.Update(podcastIndex, valdPodd);
 
-            }
+                }
         }
 
 

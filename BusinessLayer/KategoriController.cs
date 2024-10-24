@@ -40,6 +40,7 @@ namespace BusinessLayer
             {
                 string gammaltNamn = kategorier[i].Namn;
                 kategorier[i].Namn = nyttNamn;
+
                 katRep.Update(i, kategorier[i]);
 
                 poddKontroll.UppdateraPodcastsKategori(gammaltNamn, nyttNamn);
