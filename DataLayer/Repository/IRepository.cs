@@ -9,7 +9,6 @@ namespace DataLayer.Repository
     public interface IRepository<T>
     {
         List<T> GetAll();
-        T GetByID(string id);
         void Insert(T theObject);
         void Update(int index, T theObject);
         void Delete(int index);

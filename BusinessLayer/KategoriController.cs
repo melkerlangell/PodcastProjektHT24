@@ -38,12 +38,9 @@ namespace BusinessLayer
             List<Kategori> kategorier = katRep.GetAll();
             if (i >= 0 && i < kategorier.Count)
             {
-                string gammaltNamn = kategorier[i].Namn;
                 kategorier[i].Namn = nyttNamn;
 
                 katRep.Update(i, kategorier[i]);
-
-                poddKontroll.UppdateraPodcastsKategori(gammaltNamn, nyttNamn);
             }
         }
 
@@ -52,9 +49,7 @@ namespace BusinessLayer
             List<Kategori> kategorier = katRep.GetAll();
             if (index >= 0 && index < kategorier.Count)
             {
-                string gammalKategori = kategorier[index].Namn;
                 katRep.Delete(index);
-                poddKontroll.UppdateraPodcastsKategori(gammalKategori, "Ingen kategori");
             }
         }
     }

@@ -41,6 +41,7 @@ namespace BusinessLayer
             poddRep.Delete(index);
         }
 
+       
         public void FetchRssPoddar(string rssLank, string egetNamn, string kategori)
         {
             XmlReader minXMLlasare = XmlReader.Create(rssLank);
@@ -75,7 +76,6 @@ namespace BusinessLayer
                     Podcast valdPodd = poddar[podcastIndex];
                     valdPodd.Kategori = nyKategori;
                     poddRep.Update(podcastIndex, valdPodd);
-
                 }
         }
 
@@ -88,10 +88,18 @@ namespace BusinessLayer
 
             foreach (var podd in poddar)
             {
+                
                 if (podd.Kategori == gammalKategori)
                 {
-                    podd.Kategori = nyKategori;
-                    poddRep.Update(poddar.IndexOf(podd), podd); 
+                    if (string.IsNullOrEmpty(nyKategori))
+                    {
+                        podd.Kategori = "-";  
+                    }
+                    else
+                    {
+                        podd.Kategori = nyKategori; 
+                    }
+                    poddRep.Update(poddar.IndexOf(podd), podd);
                 }
             }
         }

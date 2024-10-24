@@ -32,7 +32,7 @@ namespace DataLayer
         {
             if (!File.Exists(filNamn))
             {
-                return null; 
+                return new List<T>(); 
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
@@ -56,7 +56,7 @@ namespace DataLayer
         {
             if (!File.Exists(filKategorier))
             {
-                return null;
+                return new List<T>();
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));

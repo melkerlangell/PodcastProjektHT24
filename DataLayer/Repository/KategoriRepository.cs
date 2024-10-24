@@ -15,27 +15,15 @@ namespace DataLayer.Repository
         public KategoriRepository()
         {
             Serializer = new Serializer<Kategori>();
-            ListKategorier = Serializer.LasInKategorier() ?? new List<Kategori>();
+            ListKategorier = Serializer.LasInKategorier();
         }
         public List<Kategori> GetAll()
         {
             return Serializer.LasInKategorier();
         }
-        public Kategori GetByID(string id)
-        {
-            Kategori kat = null;
-            foreach (var item in Serializer.LasInKategorier())
-            {
-                if (item.Namn.Equals(id))
-                {
-                    kat = item;
-                }
-            }
-            return kat;
-        }
+       
         public void Insert(Kategori theObject)
         {
-            ListKategorier = Serializer.LasInKategorier() ?? new List<Kategori>();
             ListKategorier.Add(theObject);
             SaveChanges();
         }
