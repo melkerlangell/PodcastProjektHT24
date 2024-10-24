@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            labelPodd = new Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            labelValjKategori = new Label();
             btnLaggTill = new Button();
             btnAndra = new Button();
             btnTaBort = new Button();
@@ -56,18 +57,18 @@
             labelKategori = new Label();
             SuspendLayout();
             // 
-            // labelPodd
+            // labelValjKategori
             // 
-            labelPodd.AutoSize = true;
-            labelPodd.Location = new Point(545, 37);
-            labelPodd.Name = "labelPodd";
-            labelPodd.Size = new Size(49, 15);
-            labelPodd.TabIndex = 0;
-            labelPodd.Text = "Podcast";
+            labelValjKategori.AutoSize = true;
+            labelValjKategori.Location = new Point(27, 132);
+            labelValjKategori.Name = "labelValjKategori";
+            labelValjKategori.Size = new Size(75, 15);
+            labelValjKategori.TabIndex = 0;
+            labelValjKategori.Text = "Välj Kategori:";
             // 
             // btnLaggTill
             // 
-            btnLaggTill.Location = new Point(360, 113);
+            btnLaggTill.Location = new Point(383, 126);
             btnLaggTill.Name = "btnLaggTill";
             btnLaggTill.Size = new Size(67, 21);
             btnLaggTill.TabIndex = 1;
@@ -77,7 +78,7 @@
             // 
             // btnAndra
             // 
-            btnAndra.Location = new Point(433, 113);
+            btnAndra.Location = new Point(161, 158);
             btnAndra.Name = "btnAndra";
             btnAndra.Size = new Size(67, 21);
             btnAndra.TabIndex = 2;
@@ -87,7 +88,7 @@
             // 
             // btnTaBort
             // 
-            btnTaBort.Location = new Point(506, 113);
+            btnTaBort.Location = new Point(468, 126);
             btnTaBort.Name = "btnTaBort";
             btnTaBort.Size = new Size(67, 21);
             btnTaBort.TabIndex = 3;
@@ -97,7 +98,7 @@
             // 
             // textURL
             // 
-            textURL.Location = new Point(381, 140);
+            textURL.Location = new Point(369, 97);
             textURL.Name = "textURL";
             textURL.Size = new Size(192, 23);
             textURL.TabIndex = 4;
@@ -105,7 +106,7 @@
             // comboBoxFiltrera
             // 
             comboBoxFiltrera.FormattingEnabled = true;
-            comboBoxFiltrera.Location = new Point(360, 84);
+            comboBoxFiltrera.Location = new Point(369, 169);
             comboBoxFiltrera.Name = "comboBoxFiltrera";
             comboBoxFiltrera.Size = new Size(140, 23);
             comboBoxFiltrera.TabIndex = 5;
@@ -115,15 +116,15 @@
             // labelURL
             // 
             labelURL.AutoSize = true;
-            labelURL.Location = new Point(337, 143);
+            labelURL.Location = new Point(335, 100);
             labelURL.Name = "labelURL";
-            labelURL.Size = new Size(28, 15);
+            labelURL.Size = new Size(31, 15);
             labelURL.TabIndex = 6;
-            labelURL.Text = "URL";
+            labelURL.Text = "URL:";
             // 
             // btnAterstall
             // 
-            btnAterstall.Location = new Point(506, 84);
+            btnAterstall.Location = new Point(515, 171);
             btnAterstall.Name = "btnAterstall";
             btnAterstall.Size = new Size(67, 21);
             btnAterstall.TabIndex = 7;
@@ -133,7 +134,7 @@
             // 
             // textNamn
             // 
-            textNamn.Location = new Point(70, 111);
+            textNamn.Location = new Point(106, 100);
             textNamn.Name = "textNamn";
             textNamn.Size = new Size(192, 23);
             textNamn.TabIndex = 8;
@@ -141,7 +142,7 @@
             // cbxKategori
             // 
             cbxKategori.FormattingEnabled = true;
-            cbxKategori.Location = new Point(72, 140);
+            cbxKategori.Location = new Point(108, 129);
             cbxKategori.Name = "cbxKategori";
             cbxKategori.Size = new Size(190, 23);
             cbxKategori.TabIndex = 10;
@@ -149,7 +150,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(741, 143);
+            label1.Location = new Point(741, 193);
             label1.Name = "label1";
             label1.Size = new Size(44, 15);
             label1.TabIndex = 11;
@@ -158,11 +159,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(973, 119);
+            label2.Location = new Point(961, 145);
             label2.Name = "label2";
-            label2.Size = new Size(51, 15);
+            label2.Size = new Size(61, 15);
             label2.TabIndex = 12;
-            label2.Text = "Kategori";
+            label2.Text = "Kategorier";
             // 
             // DeleteKategori
             // 
@@ -198,7 +199,7 @@
             // 
             listBoxKategori.FormattingEnabled = true;
             listBoxKategori.ItemHeight = 15;
-            listBoxKategori.Location = new Point(884, 189);
+            listBoxKategori.Location = new Point(884, 211);
             listBoxKategori.Name = "listBoxKategori";
             listBoxKategori.Size = new Size(213, 109);
             listBoxKategori.TabIndex = 16;
@@ -206,7 +207,7 @@
             // 
             // richTextBeskrivning
             // 
-            richTextBeskrivning.Location = new Point(884, 304);
+            richTextBeskrivning.Location = new Point(884, 332);
             richTextBeskrivning.Name = "richTextBeskrivning";
             richTextBeskrivning.Size = new Size(213, 153);
             richTextBeskrivning.TabIndex = 17;
@@ -216,7 +217,7 @@
             // 
             listBoxAvsnitt.FormattingEnabled = true;
             listBoxAvsnitt.ItemHeight = 15;
-            listBoxAvsnitt.Location = new Point(676, 189);
+            listBoxAvsnitt.Location = new Point(665, 211);
             listBoxAvsnitt.Name = "listBoxAvsnitt";
             listBoxAvsnitt.Size = new Size(189, 274);
             listBoxAvsnitt.TabIndex = 18;
@@ -226,7 +227,7 @@
             // 
             listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
             listPodd.FullRowSelect = true;
-            listPodd.Location = new Point(70, 189);
+            listPodd.Location = new Point(72, 211);
             listPodd.Name = "listPodd";
             listPodd.Size = new Size(553, 274);
             listPodd.TabIndex = 19;
@@ -257,7 +258,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(72, 86);
+            label3.Location = new Point(26, 105);
             label3.Name = "label3";
             label3.Size = new Size(74, 15);
             label3.TabIndex = 20;
@@ -265,7 +266,7 @@
             // 
             // textBoxKategori
             // 
-            textBoxKategori.Location = new Point(961, 160);
+            textBoxKategori.Location = new Point(961, 174);
             textBoxKategori.Name = "textBoxKategori";
             textBoxKategori.Size = new Size(136, 23);
             textBoxKategori.TabIndex = 21;
@@ -273,7 +274,7 @@
             // labelKategori
             // 
             labelKategori.AutoSize = true;
-            labelKategori.Location = new Point(884, 163);
+            labelKategori.Location = new Point(884, 177);
             labelKategori.Name = "labelKategori";
             labelKategori.Size = new Size(71, 15);
             labelKategori.TabIndex = 22;
@@ -305,7 +306,8 @@
             Controls.Add(btnTaBort);
             Controls.Add(btnAndra);
             Controls.Add(btnLaggTill);
-            Controls.Add(labelPodd);
+            Controls.Add(labelValjKategori);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Podcast";
             ResumeLayout(false);
@@ -314,7 +316,7 @@
 
         #endregion
 
-        private Label labelPodd;
+        private Label labelValjKategori;
         private Button btnLaggTill;
         private Button btnAndra;
         private Button btnTaBort;

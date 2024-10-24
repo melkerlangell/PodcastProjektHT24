@@ -17,7 +17,7 @@ namespace GUI
             InitializeComponent();
             poddKontroll = new PodcastController();
             katKontroll = new KategoriController();
-            
+
             hamtaAllaPoddar();
             hamtaAllaKategorier();
             resetFalt();
@@ -112,7 +112,7 @@ namespace GUI
             }
         }
 
-        
+
 
         private void btnTaBort_Click(object sender, EventArgs e)
         {
@@ -144,7 +144,7 @@ namespace GUI
 
         private Boolean andraKategoriForPodd()
         {
-            
+
             string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
             bool flagga = false;
 
@@ -158,7 +158,7 @@ namespace GUI
                     flagga = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -184,7 +184,7 @@ namespace GUI
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -205,13 +205,13 @@ namespace GUI
 
         private void btnAndra_Click_1(object sender, EventArgs e)
         {
-            bool namnAndrat = andraNamnPodcast();    
-            bool kategoriAndrad = andraKategoriForPodd(); 
+            bool namnAndrat = andraNamnPodcast();
+            bool kategoriAndrad = andraKategoriForPodd();
 
             if (namnAndrat || kategoriAndrad)
             {
                 uppdateraPoddLista();
-                resetFalt();         
+                resetFalt();
             }
             else
             {
@@ -267,6 +267,7 @@ namespace GUI
             {
                 katKontroll.LaggTillKat(nyKategori);
                 uppdateraListaOchCbx(nyKategori);
+                textBoxKategori.Text = "";
             }
         }
 
@@ -340,6 +341,9 @@ namespace GUI
             textNamn.Text = "";
             string text1 = "Välj kategori";
             cbxKategori.Text = text1;
+            textURL.Text = "";
         }
+
+        
     }
 }
