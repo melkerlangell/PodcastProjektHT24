@@ -54,7 +54,6 @@ namespace BusinessLayer
             {
                 string gammalKategori = kategorier[index].Namn;
                 katRep.Delete(index);
-
                 poddKontroll.UppdateraPodcastsKategori(gammalKategori, "Ingen kategori");
             }
         }
