@@ -55,6 +55,7 @@
             label3 = new Label();
             textBoxKategori = new TextBox();
             labelKategori = new Label();
+            labelPodd = new Label();
             SuspendLayout();
             // 
             // labelValjKategori
@@ -159,7 +160,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(961, 145);
+            label2.Location = new Point(961, 146);
             label2.Name = "label2";
             label2.Size = new Size(61, 15);
             label2.TabIndex = 12;
@@ -280,11 +281,21 @@
             labelKategori.TabIndex = 22;
             labelKategori.Text = "Ny kategori:";
             // 
+            // labelPodd
+            // 
+            labelPodd.AutoSize = true;
+            labelPodd.Location = new Point(291, 54);
+            labelPodd.Name = "labelPodd";
+            labelPodd.Size = new Size(49, 15);
+            labelPodd.TabIndex = 23;
+            labelPodd.Text = "Podcast";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1169, 595);
+            Controls.Add(labelPodd);
             Controls.Add(labelKategori);
             Controls.Add(textBoxKategori);
             Controls.Add(label3);
@@ -342,5 +353,6 @@
         private ColumnHeader kategori;
         private TextBox textBoxKategori;
         private Label labelKategori;
+        private Label labelPodd;
     }
 }
