@@ -13,12 +13,14 @@ namespace BusinessLayer
     public class KategoriController
     {
         private KategoriRepository katRep;
-        private PodcastController poddKontroll; 
+        private PodcastController poddKontroll;
+        private Validering validering;
 
         public KategoriController()
         {
             katRep = new KategoriRepository();
             poddKontroll = new PodcastController(); 
+            validering = new Validering();
         }
 
         public List<Kategori> getKategorier()
@@ -36,7 +38,7 @@ namespace BusinessLayer
         public void AndraKategoriNamn(int i, string nyttNamn)
         {
             List<Kategori> kategorier = katRep.GetAll();
-            if (i >= 0 && i < kategorier.Count)
+            if (validering.valideringIndex(i,kategorier.Count))
             {
                 kategorier[i].Namn = nyttNamn;
 
@@ -47,7 +49,7 @@ namespace BusinessLayer
         public void TaBortKategori(int index)
         {
             List<Kategori> kategorier = katRep.GetAll();
-            if (index >= 0 && index < kategorier.Count)
+            if (validering.valideringIndex(index, kategorier.Count))
             {
                 katRep.Delete(index);
             }

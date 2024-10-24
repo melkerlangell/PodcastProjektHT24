@@ -15,10 +15,12 @@ namespace BusinessLayer
     public class PodcastController
     {
         private PoddRepository poddRep;
+        private Validering validering;
 
         public PodcastController()
         {
             poddRep = new PoddRepository();
+            validering = new Validering();
         }
 
         public List<Podcast> getPoddar()
@@ -29,7 +31,7 @@ namespace BusinessLayer
         public void AndraPoddNamn(int i, string nyttNamn)
         {
             List<Podcast> poddar = poddRep.GetAll();
-            if (i >= 0 && i < poddar.Count)
+            if (validering.valideringIndex(i, poddar.Count))
             {
                 poddar[i].EgetNamn = nyttNamn;
                 poddRep.Update(i, poddar[i]);
@@ -71,7 +73,7 @@ namespace BusinessLayer
         public void AndraPoddKategori(int podcastIndex, string nyKategori)
          {
             List<Podcast> poddar = poddRep.GetAll();
-                if (podcastIndex >= 0 && podcastIndex < poddar.Count)
+                if (validering.valideringIndex(podcastIndex, poddar.Count))
                 {
                     Podcast valdPodd = poddar[podcastIndex];
                     valdPodd.Kategori = nyKategori;

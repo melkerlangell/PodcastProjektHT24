@@ -11,12 +11,14 @@ namespace GUI
     {
         private PodcastController poddKontroll;
         private KategoriController katKontroll;
+        private Validering validering;
 
         public Form1()
         {
             InitializeComponent();
             poddKontroll = new PodcastController();
             katKontroll = new KategoriController();
+            validering = new Validering();  
             startForm();
         }
 
@@ -72,14 +74,22 @@ namespace GUI
 
             try
             {
-                poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
-                listPodd.Items.Clear();
-                hamtaAllaPoddar();
+                if (validering.valideringXml(url))
+                {
+                    poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
+                    listPodd.Items.Clear();
+                    hamtaAllaPoddar();
+                }
+                else
+                {
+                    MessageBox.Show("Ange ett giltigt rss flöde");
+                }
+                
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error vid hämtning av poddar {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                validering.visaFelmeddelande("Fel vid hämtning av poddar", ex);
             }
 
             resetFalt();
@@ -133,7 +143,7 @@ namespace GUI
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error vid borttagning av podd: {ex.Message}");
+                    validering.visaFelmeddelande("Fel vid borttagning av podd", ex);
                 }
             }
             else
@@ -146,15 +156,14 @@ namespace GUI
         private Boolean andraKategoriForPodd()
         {
 
-            string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  // Ny kategori för podcasten
+            string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  
             bool flagga = false;
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(nyKategori))
+                if (validering.valideringNamn(nyKategori))
                 {
-                    int valdPoddIndex = listPodd.SelectedIndices[0];  // Hämta indexet för den valda podcasten
-
+                    int valdPoddIndex = listPodd.SelectedIndices[0]; 
 
                     poddKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
 
@@ -163,7 +172,7 @@ namespace GUI
             }
             catch (Exception ex)
             {
-
+                validering.visaFelmeddelande("Fel vid ändring av kategori", ex);
             }
             return flagga;
         }
@@ -176,20 +185,18 @@ namespace GUI
 
             try
             {
-                if (listPodd.SelectedItems.Count > 0 && !string.IsNullOrWhiteSpace(nyttNamn))
+                if (listPodd.SelectedItems.Count > 0 && validering.valideringNamn(nyttNamn))
                 {
-                    int valdPoddIndex = listPodd.SelectedIndices[0];  
+                    int valdPoddIndex = listPodd.SelectedIndices[0];
 
-                    if (!string.IsNullOrWhiteSpace(nyttNamn))
-                    {
-                        poddKontroll.AndraPoddNamn(valdPoddIndex, nyttNamn);
-                        flagga = true;
-                    }
+                    poddKontroll.AndraPoddNamn(valdPoddIndex, nyttNamn);
+                    flagga = true;
+
                 }
             }
             catch (Exception ex)
             {
-
+                validering.visaFelmeddelande("Fel vid ändring av namn", ex);
             }
             return flagga;
         }
@@ -212,6 +219,7 @@ namespace GUI
             bool namnAndrat = andraNamnPodcast();
             bool kategoriAndrad = andraKategoriForPodd();
 
+         
             if (namnAndrat || kategoriAndrad)
             {
                 uppdateraPoddLista();
@@ -219,9 +227,10 @@ namespace GUI
             }
             else
             {
-                MessageBox.Show("Välj en podcast i listan och ändra egenskaper innan du sparar",
-                                "Fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Välj en podcast i listan och ändra egenskaper innan du sparar");
+                               
             }
+            
         }
 
         private void uppdateraListaOchCbx(string kategori)
@@ -243,26 +252,31 @@ namespace GUI
         private void DeleteKategori_Click(object sender, EventArgs e)
         {
             int valdKategori = listBoxKategori.SelectedIndex;
-            
-           
-            if (valdKategori != -1)
+            try
             {
-                DialogResult dialogResult = MessageBox.Show("Är du säker på att du vill ta bort denna kategori?", "Bekräfta borttagning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                if (dialogResult == DialogResult.Yes)
+                if (valdKategori != -1)
                 {
-                    string vald = listBoxKategori.SelectedItem.ToString();
+                    DialogResult dialogResult = MessageBox.Show("Är du säker på att du vill ta bort denna kategori?", "Bekräfta borttagning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                    katKontroll.TaBortKategori(valdKategori);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        string vald = listBoxKategori.SelectedItem.ToString();
 
-                    poddKontroll.UppdateraPodcastsKategori(vald, "");
+                        katKontroll.TaBortKategori(valdKategori);
 
-                    uppdateraPoddLista();
+                        poddKontroll.UppdateraPodcastsKategori(vald, "");
+
+                        uppdateraPoddLista();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vänligen välj en kategori att ta bort.", "Ingen kategori vald", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Vänligen välj en kategori att ta bort.", "Ingen kategori vald", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                validering.visaFelmeddelande("Fel vid borttagning av kategori", ex);
             }
         }
 
@@ -270,12 +284,22 @@ namespace GUI
         {
             string nyKategori = textBoxKategori.Text;
 
-
-            if (!string.IsNullOrWhiteSpace(nyKategori))
+            try
             {
-                katKontroll.LaggTillKat(nyKategori);
-                uppdateraListaOchCbx(nyKategori);
-                textBoxKategori.Text = "";
+                if (validering.valideringNamn(nyKategori))
+                {
+                    katKontroll.LaggTillKat(nyKategori);
+                    uppdateraListaOchCbx(nyKategori);
+                    textBoxKategori.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Ange ett nytt namn i textfältet");
+                }
+            }
+            catch (Exception ex)
+            {
+                validering.visaFelmeddelande("Fel vid tilläggning av kategori", ex);
             }
         }
 
@@ -283,16 +307,26 @@ namespace GUI
         {
             string nyttNamn = textBoxKategori.Text;
             int valdKategori = listBoxKategori.SelectedIndex;
-            string vald = listBoxKategori.SelectedItem.ToString();
-
-            if (!string.IsNullOrWhiteSpace(nyttNamn))
+            
+            try
             {
-                katKontroll.AndraKategoriNamn(valdKategori, nyttNamn);
-                poddKontroll.UppdateraPodcastsKategori(vald, nyttNamn);
+                if (validering.valideringNamn(nyttNamn) && valdKategori != -1)
+                {
+                    string vald = listBoxKategori.SelectedItem.ToString();
+                    katKontroll.AndraKategoriNamn(valdKategori, nyttNamn);
+                    poddKontroll.UppdateraPodcastsKategori(vald, nyttNamn);
 
-                uppdateraPoddLista();
+                    uppdateraPoddLista();
 
 
+                }
+                else
+                {
+                    MessageBox.Show("Välj kategorin du vill ändra namn på och ange det nya namnet i textfältet");
+                }
+            }catch (Exception ex)
+            {
+                validering.visaFelmeddelande("Fel vid redigering av kategori", ex);
             }
         }
 
@@ -300,7 +334,7 @@ namespace GUI
         {
             string valdKategori = comboBoxFiltrera.SelectedItem?.ToString();
 
-            if (valdKategori is not null)
+            if (valdKategori != null)
             {
                 listPodd.Items.Clear();
                 List<Podcast> poddar = poddKontroll.getPoddar();
@@ -316,9 +350,7 @@ namespace GUI
 
                         listPodd.Items.Add(podcastItem);
                     }
-
                 }
-
             }
         }
 
