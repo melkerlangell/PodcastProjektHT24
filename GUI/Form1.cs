@@ -1,5 +1,7 @@
+using System;
 using Modeller;
 using BusinessLayer;
+using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -355,25 +357,41 @@ namespace GUI
         private void FiltreraKategori()
         {
             string valdKategori = comboBoxFiltrera.SelectedItem?.ToString();
+            List<Kategori> katt = new List<Kategori>();
+            
+            if(valdKategori != null) { 
+            listPodd.Items.Clear();
+                var query = poddKontroll.getPoddar().Where(p => p.Kategori == valdKategori);
 
-            if (valdKategori != null)
+                foreach (var p in query)
             {
-                listPodd.Items.Clear();
-                List<Podcast> poddar = poddKontroll.getPoddar();
+                ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
+                podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
+                podcastItem.SubItems.Add(p.Titel);
+                podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
 
-                foreach (Podcast p in poddar)
-                {
-                    if (p.Kategori == valdKategori)
-                    {
-                        ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
-                        podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-                        podcastItem.SubItems.Add(p.Titel);
-                        podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
-
-                        listPodd.Items.Add(podcastItem);
-                    }
-                }
+                listPodd.Items.Add(podcastItem);
             }
+            }
+
+            //if (valdKategori != null)
+            //{
+            //    listPodd.Items.Clear();
+            //    List<Podcast> poddar = poddKontroll.getPoddar();
+
+            //    foreach (Podcast p in poddar)
+            //    {
+            //        if (p.Kategori == valdKategori)
+            //        {
+            //            ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
+            //            podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
+            //            podcastItem.SubItems.Add(p.Titel);
+            //            podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
+
+            //            listPodd.Items.Add(podcastItem);
+            //        }
+            //    }
+            //}
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
