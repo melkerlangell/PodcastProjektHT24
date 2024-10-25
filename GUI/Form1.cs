@@ -82,13 +82,16 @@ namespace GUI
             string egetNamn = textNamn.Text;
             string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
+            string[] intervall = comboBoxIntervall.Text.Split(' ');
+            int valdIntervall = Int32.Parse(intervall[0]);
+
             try
             {
                 if (validering.poddFinnsInte(url))
                 {
                     if (validering.valideringXml(url))
                     {
-                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
+                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
                         listPodd.Items.Clear();
                         hamtaAllaPoddar();
                     }

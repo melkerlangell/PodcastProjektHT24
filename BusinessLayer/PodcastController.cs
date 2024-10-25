@@ -44,7 +44,7 @@ namespace BusinessLayer
         }
 
        
-        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori)
+        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
         {
             XmlReader minXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
@@ -54,6 +54,7 @@ namespace BusinessLayer
             enPodd.EgetNamn = egetNamn;
             enPodd.Kategori = kategori;
             enPodd.UrlRss = rssLank;
+            enPodd.UppdateringsIntervall = intervall;
 
             foreach (SyndicationItem item in poddFlode.Items)
             {
