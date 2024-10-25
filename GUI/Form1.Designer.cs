@@ -56,12 +56,15 @@
             textBoxKategori = new TextBox();
             labelKategori = new Label();
             labelPodd = new Label();
+            comboBoxIntervall = new ComboBox();
+            labelIntervall = new Label();
+            labelBeskrivning = new Label();
             SuspendLayout();
             // 
             // labelValjKategori
             // 
             labelValjKategori.AutoSize = true;
-            labelValjKategori.Location = new Point(27, 132);
+            labelValjKategori.Location = new Point(119, 132);
             labelValjKategori.Name = "labelValjKategori";
             labelValjKategori.Size = new Size(75, 15);
             labelValjKategori.TabIndex = 0;
@@ -69,7 +72,7 @@
             // 
             // btnLaggTill
             // 
-            btnLaggTill.Location = new Point(383, 126);
+            btnLaggTill.Location = new Point(530, 126);
             btnLaggTill.Name = "btnLaggTill";
             btnLaggTill.Size = new Size(67, 21);
             btnLaggTill.TabIndex = 1;
@@ -79,7 +82,7 @@
             // 
             // btnAndra
             // 
-            btnAndra.Location = new Point(161, 158);
+            btnAndra.Location = new Point(264, 190);
             btnAndra.Name = "btnAndra";
             btnAndra.Size = new Size(67, 21);
             btnAndra.TabIndex = 2;
@@ -89,7 +92,7 @@
             // 
             // btnTaBort
             // 
-            btnTaBort.Location = new Point(468, 126);
+            btnTaBort.Location = new Point(614, 126);
             btnTaBort.Name = "btnTaBort";
             btnTaBort.Size = new Size(67, 21);
             btnTaBort.TabIndex = 3;
@@ -99,7 +102,7 @@
             // 
             // textURL
             // 
-            textURL.Location = new Point(369, 97);
+            textURL.Location = new Point(500, 92);
             textURL.Name = "textURL";
             textURL.Size = new Size(192, 23);
             textURL.TabIndex = 4;
@@ -107,7 +110,7 @@
             // comboBoxFiltrera
             // 
             comboBoxFiltrera.FormattingEnabled = true;
-            comboBoxFiltrera.Location = new Point(369, 169);
+            comboBoxFiltrera.Location = new Point(468, 169);
             comboBoxFiltrera.Name = "comboBoxFiltrera";
             comboBoxFiltrera.Size = new Size(140, 23);
             comboBoxFiltrera.TabIndex = 5;
@@ -117,7 +120,7 @@
             // labelURL
             // 
             labelURL.AutoSize = true;
-            labelURL.Location = new Point(335, 100);
+            labelURL.Location = new Point(463, 95);
             labelURL.Name = "labelURL";
             labelURL.Size = new Size(31, 15);
             labelURL.TabIndex = 6;
@@ -125,7 +128,7 @@
             // 
             // btnAterstall
             // 
-            btnAterstall.Location = new Point(515, 171);
+            btnAterstall.Location = new Point(614, 169);
             btnAterstall.Name = "btnAterstall";
             btnAterstall.Size = new Size(67, 21);
             btnAterstall.TabIndex = 7;
@@ -135,7 +138,7 @@
             // 
             // textNamn
             // 
-            textNamn.Location = new Point(106, 100);
+            textNamn.Location = new Point(200, 92);
             textNamn.Name = "textNamn";
             textNamn.Size = new Size(192, 23);
             textNamn.TabIndex = 8;
@@ -143,7 +146,7 @@
             // cbxKategori
             // 
             cbxKategori.FormattingEnabled = true;
-            cbxKategori.Location = new Point(108, 129);
+            cbxKategori.Location = new Point(200, 129);
             cbxKategori.Name = "cbxKategori";
             cbxKategori.Size = new Size(190, 23);
             cbxKategori.TabIndex = 10;
@@ -151,7 +154,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(741, 193);
+            label1.Location = new Point(864, 196);
             label1.Name = "label1";
             label1.Size = new Size(44, 15);
             label1.TabIndex = 11;
@@ -160,7 +163,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(961, 146);
+            label2.Location = new Point(1123, 161);
             label2.Name = "label2";
             label2.Size = new Size(61, 15);
             label2.TabIndex = 12;
@@ -168,7 +171,7 @@
             // 
             // DeleteKategori
             // 
-            DeleteKategori.Location = new Point(1103, 265);
+            DeleteKategori.Location = new Point(1271, 305);
             DeleteKategori.Name = "DeleteKategori";
             DeleteKategori.Size = new Size(67, 21);
             DeleteKategori.TabIndex = 15;
@@ -178,7 +181,7 @@
             // 
             // EditKategori
             // 
-            EditKategori.Location = new Point(1103, 238);
+            EditKategori.Location = new Point(1271, 266);
             EditKategori.Name = "EditKategori";
             EditKategori.Size = new Size(67, 21);
             EditKategori.TabIndex = 14;
@@ -188,7 +191,7 @@
             // 
             // AddKategori
             // 
-            AddKategori.Location = new Point(1103, 211);
+            AddKategori.Location = new Point(1271, 226);
             AddKategori.Name = "AddKategori";
             AddKategori.Size = new Size(67, 21);
             AddKategori.TabIndex = 13;
@@ -200,17 +203,17 @@
             // 
             listBoxKategori.FormattingEnabled = true;
             listBoxKategori.ItemHeight = 15;
-            listBoxKategori.Location = new Point(884, 211);
+            listBoxKategori.Location = new Point(1052, 226);
             listBoxKategori.Name = "listBoxKategori";
-            listBoxKategori.Size = new Size(213, 109);
+            listBoxKategori.Size = new Size(213, 169);
             listBoxKategori.TabIndex = 16;
             listBoxKategori.SelectedIndexChanged += listBoxKategori_SelectedIndexChanged;
             // 
             // richTextBeskrivning
             // 
-            richTextBeskrivning.Location = new Point(884, 332);
+            richTextBeskrivning.Location = new Point(747, 536);
             richTextBeskrivning.Name = "richTextBeskrivning";
-            richTextBeskrivning.Size = new Size(213, 153);
+            richTextBeskrivning.Size = new Size(273, 141);
             richTextBeskrivning.TabIndex = 17;
             richTextBeskrivning.Text = "";
             // 
@@ -218,9 +221,9 @@
             // 
             listBoxAvsnitt.FormattingEnabled = true;
             listBoxAvsnitt.ItemHeight = 15;
-            listBoxAvsnitt.Location = new Point(665, 211);
+            listBoxAvsnitt.Location = new Point(747, 226);
             listBoxAvsnitt.Name = "listBoxAvsnitt";
-            listBoxAvsnitt.Size = new Size(189, 274);
+            listBoxAvsnitt.Size = new Size(273, 274);
             listBoxAvsnitt.TabIndex = 18;
             listBoxAvsnitt.SelectedIndexChanged += listBoxAvsnitt_SelectedIndexChanged;
             // 
@@ -228,9 +231,9 @@
             // 
             listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
             listPodd.FullRowSelect = true;
-            listPodd.Location = new Point(72, 211);
+            listPodd.Location = new Point(162, 226);
             listPodd.Name = "listPodd";
-            listPodd.Size = new Size(553, 274);
+            listPodd.Size = new Size(553, 451);
             listPodd.TabIndex = 19;
             listPodd.UseCompatibleStateImageBehavior = false;
             listPodd.View = View.Details;
@@ -259,7 +262,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(26, 105);
+            label3.Location = new Point(119, 100);
             label3.Name = "label3";
             label3.Size = new Size(74, 15);
             label3.TabIndex = 20;
@@ -267,7 +270,7 @@
             // 
             // textBoxKategori
             // 
-            textBoxKategori.Location = new Point(961, 174);
+            textBoxKategori.Location = new Point(1123, 188);
             textBoxKategori.Name = "textBoxKategori";
             textBoxKategori.Size = new Size(136, 23);
             textBoxKategori.TabIndex = 21;
@@ -275,7 +278,7 @@
             // labelKategori
             // 
             labelKategori.AutoSize = true;
-            labelKategori.Location = new Point(884, 177);
+            labelKategori.Location = new Point(1046, 193);
             labelKategori.Name = "labelKategori";
             labelKategori.Size = new Size(71, 15);
             labelKategori.TabIndex = 22;
@@ -284,17 +287,46 @@
             // labelPodd
             // 
             labelPodd.AutoSize = true;
-            labelPodd.Location = new Point(291, 54);
+            labelPodd.Location = new Point(395, 45);
             labelPodd.Name = "labelPodd";
             labelPodd.Size = new Size(49, 15);
             labelPodd.TabIndex = 23;
             labelPodd.Text = "Podcast";
             // 
+            // comboBoxIntervall
+            // 
+            comboBoxIntervall.FormattingEnabled = true;
+            comboBoxIntervall.Location = new Point(201, 161);
+            comboBoxIntervall.Name = "comboBoxIntervall";
+            comboBoxIntervall.Size = new Size(189, 23);
+            comboBoxIntervall.TabIndex = 24;
+            // 
+            // labelIntervall
+            // 
+            labelIntervall.AutoSize = true;
+            labelIntervall.Location = new Point(50, 164);
+            labelIntervall.Name = "labelIntervall";
+            labelIntervall.Size = new Size(143, 15);
+            labelIntervall.TabIndex = 25;
+            labelIntervall.Text = "Välj uppdateringsintervall:";
+            // 
+            // labelBeskrivning
+            // 
+            labelBeskrivning.AutoSize = true;
+            labelBeskrivning.Location = new Point(831, 518);
+            labelBeskrivning.Name = "labelBeskrivning";
+            labelBeskrivning.Size = new Size(110, 15);
+            labelBeskrivning.TabIndex = 26;
+            labelBeskrivning.Text = "Avsnittsbeskrivning";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1195, 658);
+            ClientSize = new Size(1376, 796);
+            Controls.Add(labelBeskrivning);
+            Controls.Add(labelIntervall);
+            Controls.Add(comboBoxIntervall);
             Controls.Add(labelPodd);
             Controls.Add(labelKategori);
             Controls.Add(textBoxKategori);
@@ -354,5 +386,8 @@
         private TextBox textBoxKategori;
         private Label labelKategori;
         private Label labelPodd;
+        private ComboBox comboBoxIntervall;
+        private Label labelIntervall;
+        private Label labelBeskrivning;
     }
 }

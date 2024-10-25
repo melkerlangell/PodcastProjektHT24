@@ -19,6 +19,8 @@ namespace Modeller
         public List<Avsnitt> poddAvsnitt { get; set; }
         public string Kategori {  get; set; }
 
+       public int UppdateringsIntervall {  get; set; }
+
 
         public Podcast() 
         {

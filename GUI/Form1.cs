@@ -28,6 +28,16 @@ namespace GUI
             hamtaAllaKategorier();
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
+            laddaIntervallCbx();
+        }
+
+        private void laddaIntervallCbx()
+        {
+            comboBoxIntervall.Items.Add("1 minut");
+            comboBoxIntervall.Items.Add("2 minuter");
+            comboBoxIntervall.Items.Add("10 minuter");
+            comboBoxIntervall.Items.Add("30 minuter");
+            comboBoxIntervall.Items.Add("60 minuter");
         }
 
         private void hamtaAllaPoddar()
