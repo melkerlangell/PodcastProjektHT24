@@ -53,6 +53,7 @@ namespace BusinessLayer
             enPodd.Titel = poddFlode.Title.Text;
             enPodd.EgetNamn = egetNamn;
             enPodd.Kategori = kategori;
+            enPodd.UrlRss = rssLank;
 
             foreach (SyndicationItem item in poddFlode.Items)
             {

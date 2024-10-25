@@ -15,6 +15,8 @@ namespace Modeller
         public int AntalAvsnitt { get; set; }
 
         public string EgetNamn { get; set; }
+
+        public string UrlRss { get; set; }
         
         public List<Avsnitt> poddAvsnitt { get; set; }
         public string Kategori {  get; set; }

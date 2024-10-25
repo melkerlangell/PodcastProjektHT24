@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Modeller;
 
 namespace BusinessLayer
 {
     public class Validering
     {
-        public Validering() { }
+        private PodcastController poddKontroll;
+
+        public Validering() 
+        {
+            
+        }
 
         public string visaFelmeddelande(string felmeddelande, Exception ex)
         {
@@ -40,6 +46,23 @@ namespace BusinessLayer
             {
                 return false;
             }
+        }
+
+
+        public bool poddFinnsInte(string url)
+        {
+            poddKontroll = new PodcastController();
+            List<Podcast> poddar = poddKontroll.getPoddar();
+            bool flagga = true;
+
+            foreach(Podcast p in poddar)
+            {
+                if(p.UrlRss == url)
+                {
+                    flagga = false;
+                }
+            }
+            return flagga;
         }
     }
 }

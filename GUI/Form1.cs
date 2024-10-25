@@ -84,15 +84,24 @@ namespace GUI
 
             try
             {
-                if (validering.valideringXml(url))
+                if (validering.poddFinnsInte(url))
                 {
-                    poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
-                    listPodd.Items.Clear();
-                    hamtaAllaPoddar();
+                    if (validering.valideringXml(url))
+                    {
+                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
+                        listPodd.Items.Clear();
+                        hamtaAllaPoddar();
+                    }
+                    else
+                    {
+                        
+                        MessageBox.Show("Ange ett giltigt rss flöde");
+                    }
+                    
                 }
                 else
                 {
-                    MessageBox.Show("Ange ett giltigt rss flöde");
+                    MessageBox.Show("Flödet existerar redan, onödigt med dubbletter ;)");
                 }
                 
 
