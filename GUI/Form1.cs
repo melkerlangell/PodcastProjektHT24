@@ -46,6 +46,7 @@ namespace GUI
 
                 t.Tick += (sender, args) =>
                 {
+                    t.Stop();
                     try
                     {
                         poddKontroll.FetchBaraAvsnitt(p);
@@ -130,8 +131,7 @@ namespace GUI
                     if (validering.valideringXml(url))
                     {
                         poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
-                        listPodd.Items.Clear();
-                        hamtaAllaPoddar();
+                        uppdateraPoddLista();
                     }
                     else
                     {
@@ -296,6 +296,7 @@ namespace GUI
             listBoxKategori.Items.Clear();
             comboBoxFiltrera.Items.Clear();
             hamtaAllaKategorier();
+            UppdateringPoddar();
             listBoxAvsnitt.Items.Clear();
         }
 
