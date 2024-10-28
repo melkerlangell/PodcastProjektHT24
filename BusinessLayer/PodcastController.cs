@@ -44,7 +44,7 @@ namespace BusinessLayer
         }
 
 
-        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori)
+        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
         {
             using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
             {
@@ -56,6 +56,7 @@ namespace BusinessLayer
                     EgetNamn = egetNamn,
                     Kategori = kategori,
                     UrlRss = rssLank,
+                    uppdateringsIntervall = intervall,
                     poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
                     {
                         Title = item.Title.Text,
@@ -70,11 +71,25 @@ namespace BusinessLayer
             }
         }
 
+        public void FetchBaraAvsnitt(Podcast p)
+        {
+            using(XmlReader minXMLlasare = XmlReader.Create(p.UrlRss))
+            {
+                SyndicationFeed avsnittFlode = SyndicationFeed.Load(minXMLlasare);
+                p.poddAvsnitt = avsnittFlode.Items.Select(item => new Avsnitt
+                {
+                    Title = item.Title.Text,
+                    PublishDate = item.PublishDate.DateTime,
+                    Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
+                }).ToList();
+            }
+        }
+
 
 
         public void AndraPoddKategori(int podcastIndex, string nyKategori)
          {
-            List<Podcast> poddar = poddRep.GetAll();
+            List<Podcast> poddar = getPoddar();
                 if (validering.valideringIndex(podcastIndex, poddar.Count))
                 {
                     Podcast valdPodd = poddar[podcastIndex];
@@ -83,10 +98,21 @@ namespace BusinessLayer
                 }
         }
 
+        public void AndraPoddIntervall(int podcastIndex, string nyttIntervall)
+        {
+            List<Podcast> poddar = getPoddar();
+            if (validering.valideringIndex(podcastIndex, poddar.Count()))
+            {
+                Podcast valdPodd = poddar[podcastIndex];
+                valdPodd.uppdateringsIntervall = Int32.Parse(nyttIntervall);
+                poddRep.Update(podcastIndex, valdPodd);
+            }
+        }
+
 
         public void UppdateraPodcastsKategori(string gammalKategori, string nyKategori)
         {
-            List<Podcast> poddar = poddRep.GetAll();
+            List<Podcast> poddar = getPoddar();
 
             foreach (var podd in poddar)
             {

@@ -52,11 +52,15 @@
             antalAvsnitt = new ColumnHeader();
             titel = new ColumnHeader();
             kategori = new ColumnHeader();
+            Uppdateringsintervall = new ColumnHeader();
             label3 = new Label();
             textBoxKategori = new TextBox();
             labelKategori = new Label();
             labelPodd = new Label();
             labelBeskrivning = new Label();
+            comboBoxIntervall = new ComboBox();
+            labelIntervall = new Label();
+            labelUppdatering = new Label();
             SuspendLayout();
             // 
             // labelValjKategori
@@ -80,7 +84,7 @@
             // 
             // btnAndra
             // 
-            btnAndra.Location = new Point(266, 171);
+            btnAndra.Location = new Point(269, 187);
             btnAndra.Name = "btnAndra";
             btnAndra.Size = new Size(67, 21);
             btnAndra.TabIndex = 2;
@@ -228,7 +232,7 @@
             // 
             // listPodd
             // 
-            listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori });
+            listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori, Uppdateringsintervall });
             listPodd.FullRowSelect = true;
             listPodd.Location = new Point(162, 226);
             listPodd.Name = "listPodd";
@@ -241,22 +245,27 @@
             // namn
             // 
             namn.Text = "Namn";
-            namn.Width = 125;
+            namn.Width = 80;
             // 
             // antalAvsnitt
             // 
             antalAvsnitt.Text = "Antal Avsnitt";
-            antalAvsnitt.Width = 120;
+            antalAvsnitt.Width = 85;
             // 
             // titel
             // 
             titel.Text = "Titel";
-            titel.Width = 200;
+            titel.Width = 150;
             // 
             // kategori
             // 
             kategori.Text = "Kategori";
-            kategori.Width = 100;
+            kategori.Width = 110;
+            // 
+            // Uppdateringsintervall
+            // 
+            Uppdateringsintervall.Text = "Uppdateringsintervall";
+            Uppdateringsintervall.Width = 130;
             // 
             // label3
             // 
@@ -301,11 +310,40 @@
             labelBeskrivning.TabIndex = 26;
             labelBeskrivning.Text = "Avsnittsbeskrivning";
             // 
+            // comboBoxIntervall
+            // 
+            comboBoxIntervall.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxIntervall.FormattingEnabled = true;
+            comboBoxIntervall.Location = new Point(200, 161);
+            comboBoxIntervall.Name = "comboBoxIntervall";
+            comboBoxIntervall.Size = new Size(190, 23);
+            comboBoxIntervall.TabIndex = 27;
+            // 
+            // labelIntervall
+            // 
+            labelIntervall.AutoSize = true;
+            labelIntervall.Location = new Point(51, 164);
+            labelIntervall.Name = "labelIntervall";
+            labelIntervall.Size = new Size(143, 15);
+            labelIntervall.TabIndex = 28;
+            labelIntervall.Text = "Välj uppdateringsintervall:";
+            // 
+            // labelUppdatering
+            // 
+            labelUppdatering.AutoSize = true;
+            labelUppdatering.Location = new Point(298, 680);
+            labelUppdatering.Name = "labelUppdatering";
+            labelUppdatering.Size = new Size(0, 15);
+            labelUppdatering.TabIndex = 29;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1376, 796);
+            Controls.Add(labelUppdatering);
+            Controls.Add(labelIntervall);
+            Controls.Add(comboBoxIntervall);
             Controls.Add(labelBeskrivning);
             Controls.Add(labelPodd);
             Controls.Add(labelKategori);
@@ -367,5 +405,9 @@
         private Label labelKategori;
         private Label labelPodd;
         private Label labelBeskrivning;
+        private ComboBox comboBoxIntervall;
+        private Label labelIntervall;
+        private ColumnHeader Uppdateringsintervall;
+        private Label labelUppdatering;
     }
 }

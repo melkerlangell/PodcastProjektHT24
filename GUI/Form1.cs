@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Runtime.CompilerServices;
+
 
 
 namespace GUI
@@ -14,6 +16,7 @@ namespace GUI
         private PodcastController poddKontroll;
         private KategoriController katKontroll;
         private Validering validering;
+        
 
         public Form1()
         {
@@ -30,10 +33,46 @@ namespace GUI
             hamtaAllaKategorier();
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
+            UppdateringPoddar();
         }
 
-       
 
+        private void UppdateringPoddar()
+        {
+            foreach (Podcast p in poddKontroll.getPoddar())
+            {
+                System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+                t.Interval = p.uppdateringsIntervall * 60000;
+
+                t.Tick += (sender, args) =>
+                {
+                    try
+                    {
+                        poddKontroll.FetchBaraAvsnitt(p);
+                        labelUppdatering.Text = "Podcast: "+ p.Titel +" uppdaterades "+ DateTime.Now;
+                        uppdateraPoddLista();
+                    }
+                    catch (Exception ex)
+                    {
+                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+                    }
+                };
+
+                t.Start(); 
+            }
+        }
+
+
+
+        private void laddaCbxIntervall()
+        {
+            comboBoxIntervall.Items.Add("1 minut");
+            comboBoxIntervall.Items.Add("5 minuter");
+            comboBoxIntervall.Items.Add("10 minuter");
+            comboBoxIntervall.Items.Add("30 minuter");
+            comboBoxIntervall.Items.Add("60 minuter");
+
+        }
         private void hamtaAllaPoddar()
         {
             List<Podcast> poddar = poddKontroll.getPoddar();
@@ -48,6 +87,7 @@ namespace GUI
                 podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
                 podcastItem.SubItems.Add(p.Titel);
                 podcastItem.SubItems.Add(p.Kategori ?? "-");
+                podcastItem.SubItems.Add(p.uppdateringsIntervall + " minuter" ?? "-");
 
                 listPodd.Items.Add(podcastItem);
             }
@@ -76,6 +116,12 @@ namespace GUI
             string egetNamn = textNamn.Text;
             string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
+            int valdIntervall = 0;
+            if (validering.valideringNamn(comboBoxIntervall.Text))
+            {
+                string[] intervall = comboBoxIntervall.Text.Split(' ');
+                valdIntervall = Int32.Parse(intervall[0]);
+            }
 
             try
             {
@@ -83,7 +129,7 @@ namespace GUI
                 {
                     if (validering.valideringXml(url))
                     {
-                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
+                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
                         listPodd.Items.Clear();
                         hamtaAllaPoddar();
                     }
@@ -191,6 +237,33 @@ namespace GUI
             return flagga;
         }
 
+        private Boolean andraIntervallPodcast()
+        {
+            string? nyttIntervall = comboBoxIntervall.SelectedItem != null ? comboBoxIntervall.SelectedItem.ToString() : null;
+            bool flagga = false;
+
+            try
+            {
+                if (listPodd.SelectedItems.Count > 0 && validering.valideringNamn(nyttIntervall))
+                {
+                    string[] intervall = nyttIntervall.Split(" ");
+
+                    string valdIntervall = intervall[0];
+
+                    int valdPoddIndex = listPodd.SelectedIndices[0];
+
+                    poddKontroll.AndraPoddIntervall(valdPoddIndex, valdIntervall);
+
+                    flagga = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                validering.visaFelmeddelande("Fel vid ändring av intervall", ex);
+            }
+            return flagga;
+        }
+
 
         private Boolean andraNamnPodcast()
         {
@@ -231,8 +304,10 @@ namespace GUI
         {
             bool namnAndrat = andraNamnPodcast();
             bool kategoriAndrad = andraKategoriForPodd();
-         
-            if (namnAndrat || kategoriAndrad)
+            bool intervallAndrad = andraIntervallPodcast();
+
+
+            if (namnAndrat || kategoriAndrad || intervallAndrad)
             {
                 uppdateraPoddLista();
                 resetFalt();
@@ -390,6 +465,8 @@ namespace GUI
             string text1 = "Välj kategori";
             cbxKategori.Text = text1;
             textURL.Text = "";
+            comboBoxIntervall.Items.Clear();
+            laddaCbxIntervall();
         }
 
         

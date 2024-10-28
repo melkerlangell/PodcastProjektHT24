@@ -17,6 +17,9 @@ namespace Modeller
         public string EgetNamn { get; set; }
 
         public string UrlRss { get; set; }
+
+        public int uppdateringsIntervall { get; set; }
+
         
         public List<Avsnitt> poddAvsnitt { get; set; }
         public string Kategori {  get; set; }
