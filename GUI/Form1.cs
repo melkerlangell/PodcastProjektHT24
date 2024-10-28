@@ -185,7 +185,7 @@ namespace GUI
 
             try
             {
-                if (validering.valideringNamn(nyKategori))
+                if (listPodd.SelectedItems.Count > 0 && validering.valideringNamn(nyKategori))
                 {
                     int valdPoddIndex = listPodd.SelectedIndices[0]; 
 
@@ -225,6 +225,29 @@ namespace GUI
             return flagga;
         }
 
+        private Boolean andraUppdateringsIntervallPodcast()
+        {
+            string? nyttIntervall = comboBoxIntervall.SelectedItem != null ? comboBoxIntervall.SelectedItem.ToString() : null;
+            bool flagga = false;
+            try
+            {
+                if(listPodd.SelectedItems.Count > 0  && validering.valideringNamn(nyttIntervall))
+                {
+                    int valdPoddIndex = listPodd.SelectedIndices[0];
+                    string[] intervall = nyttIntervall.Split(" ");
+                    string nyttInt = intervall[0];
+
+                    poddKontroll.AndraPoddUppdateringsIntervall(valdPoddIndex, nyttInt);
+                    flagga = true;
+                }
+                  
+            }catch (Exception ex)
+            {
+                validering.visaFelmeddelande("Fel vid ändring av uppdateringsintervall", ex);
+            }
+            return flagga;
+        }
+
 
         private void uppdateraPoddLista()
         {
@@ -242,16 +265,17 @@ namespace GUI
         {
             bool namnAndrat = andraNamnPodcast();
             bool kategoriAndrad = andraKategoriForPodd();
+            bool intervallAndrad = andraUppdateringsIntervallPodcast(); 
 
          
-            if (namnAndrat || kategoriAndrad)
+            if (namnAndrat || kategoriAndrad || intervallAndrad)
             {
                 uppdateraPoddLista();
                 resetFalt();
             }
             else
             {
-                MessageBox.Show("Välj en podcast i listan och ändra egenskaper innan du sparar");
+                MessageBox.Show("Välj en podcast i listan och ändra någon egenskap innan du sparar");
                                
             }
             
@@ -373,25 +397,6 @@ namespace GUI
                 listPodd.Items.Add(podcastItem);
             }
             }
-
-            //if (valdKategori != null)
-            //{
-            //    listPodd.Items.Clear();
-            //    List<Podcast> poddar = poddKontroll.getPoddar();
-
-            //    foreach (Podcast p in poddar)
-            //    {
-            //        if (p.Kategori == valdKategori)
-            //        {
-            //            ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
-            //            podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-            //            podcastItem.SubItems.Add(p.Titel);
-            //            podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
-
-            //            listPodd.Items.Add(podcastItem);
-            //        }
-            //    }
-            //}
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

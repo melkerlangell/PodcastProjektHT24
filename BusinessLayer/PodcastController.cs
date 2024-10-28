@@ -83,6 +83,17 @@ namespace BusinessLayer
                 }
         }
 
+        public void AndraPoddUppdateringsIntervall(int podcastIndex, string nyttIntervall)
+        {
+            List<Podcast> poddar = poddRep.GetAll();
+            if(validering.valideringIndex(podcastIndex, poddar.Count))
+            {
+                Podcast valdPodd = poddar[podcastIndex];
+                valdPodd.UppdateringsIntervall = Int32.Parse(nyttIntervall);
+                poddRep.Update(podcastIndex, valdPodd);
+            }
+        }
+
 
 
 

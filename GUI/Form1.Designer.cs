@@ -109,12 +109,12 @@
             // 
             // comboBoxFiltrera
             // 
+            comboBoxFiltrera.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFiltrera.FormattingEnabled = true;
             comboBoxFiltrera.Location = new Point(468, 169);
             comboBoxFiltrera.Name = "comboBoxFiltrera";
             comboBoxFiltrera.Size = new Size(140, 23);
             comboBoxFiltrera.TabIndex = 5;
-            comboBoxFiltrera.Text = "filtrera...";
             comboBoxFiltrera.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // labelURL
@@ -145,6 +145,7 @@
             // 
             // cbxKategori
             // 
+            cbxKategori.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxKategori.FormattingEnabled = true;
             cbxKategori.Location = new Point(200, 129);
             cbxKategori.Name = "cbxKategori";
@@ -295,6 +296,7 @@
             // 
             // comboBoxIntervall
             // 
+            comboBoxIntervall.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxIntervall.FormattingEnabled = true;
             comboBoxIntervall.Location = new Point(201, 161);
             comboBoxIntervall.Name = "comboBoxIntervall";
