@@ -43,33 +43,33 @@ namespace BusinessLayer
             poddRep.Delete(index);
         }
 
-       
-        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
+
+        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori)
         {
-            XmlReader minXMLlasare = XmlReader.Create(rssLank);
-            SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
-
-            Podcast enPodd = new Podcast();
-            enPodd.Titel = poddFlode.Title.Text;
-            enPodd.EgetNamn = egetNamn;
-            enPodd.Kategori = kategori;
-            enPodd.UrlRss = rssLank;
-            enPodd.UppdateringsIntervall = intervall;
-
-            foreach (SyndicationItem item in poddFlode.Items)
+            using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
             {
-                Avsnitt ettAvsnitt = new Avsnitt();
-                {
-                    ettAvsnitt.Title = item.Title.Text;
-                    ettAvsnitt.PublishDate = item.PublishDate.DateTime;
-                    ettAvsnitt.Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig";
-                };
-                enPodd.poddAvsnitt.Add(ettAvsnitt);
-            }
-            enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+                SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
 
-            poddRep.Insert(enPodd);
+                Podcast enPodd = new Podcast
+                {
+                    Titel = poddFlode.Title.Text,
+                    EgetNamn = egetNamn,
+                    Kategori = kategori,
+                    UrlRss = rssLank,
+                    poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
+                    {
+                        Title = item.Title.Text,
+                        PublishDate = item.PublishDate.DateTime,
+                        Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
+                    }).ToList()
+                };
+
+                enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+
+                poddRep.Insert(enPodd);
+            }
         }
+
 
 
         public void AndraPoddKategori(int podcastIndex, string nyKategori)
@@ -82,19 +82,6 @@ namespace BusinessLayer
                     poddRep.Update(podcastIndex, valdPodd);
                 }
         }
-
-        public void AndraPoddUppdateringsIntervall(int podcastIndex, string nyttIntervall)
-        {
-            List<Podcast> poddar = poddRep.GetAll();
-            if(validering.valideringIndex(podcastIndex, poddar.Count))
-            {
-                Podcast valdPodd = poddar[podcastIndex];
-                valdPodd.UppdateringsIntervall = Int32.Parse(nyttIntervall);
-                poddRep.Update(podcastIndex, valdPodd);
-            }
-        }
-
-
 
 
         public void UppdateraPodcastsKategori(string gammalKategori, string nyKategori)

@@ -30,17 +30,9 @@ namespace GUI
             hamtaAllaKategorier();
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
-            laddaIntervallCbx();
         }
 
-        private void laddaIntervallCbx()
-        {
-            comboBoxIntervall.Items.Add("1 minut");
-            comboBoxIntervall.Items.Add("2 minuter");
-            comboBoxIntervall.Items.Add("10 minuter");
-            comboBoxIntervall.Items.Add("30 minuter");
-            comboBoxIntervall.Items.Add("60 minuter");
-        }
+       
 
         private void hamtaAllaPoddar()
         {
@@ -84,8 +76,6 @@ namespace GUI
             string egetNamn = textNamn.Text;
             string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
-            string[] intervall = comboBoxIntervall.Text.Split(' ');
-            int valdIntervall = Int32.Parse(intervall[0]);
 
             try
             {
@@ -93,7 +83,7 @@ namespace GUI
                 {
                     if (validering.valideringXml(url))
                     {
-                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
+                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori);
                         listPodd.Items.Clear();
                         hamtaAllaPoddar();
                     }
@@ -225,30 +215,6 @@ namespace GUI
             return flagga;
         }
 
-        private Boolean andraUppdateringsIntervallPodcast()
-        {
-            string? nyttIntervall = comboBoxIntervall.SelectedItem != null ? comboBoxIntervall.SelectedItem.ToString() : null;
-            bool flagga = false;
-            try
-            {
-                if(listPodd.SelectedItems.Count > 0  && validering.valideringNamn(nyttIntervall))
-                {
-                    int valdPoddIndex = listPodd.SelectedIndices[0];
-                    string[] intervall = nyttIntervall.Split(" ");
-                    string nyttInt = intervall[0];
-
-                    poddKontroll.AndraPoddUppdateringsIntervall(valdPoddIndex, nyttInt);
-                    flagga = true;
-                }
-                  
-            }catch (Exception ex)
-            {
-                validering.visaFelmeddelande("Fel vid ändring av uppdateringsintervall", ex);
-            }
-            return flagga;
-        }
-
-
         private void uppdateraPoddLista()
         {
             listPodd.Items.Clear();
@@ -265,10 +231,8 @@ namespace GUI
         {
             bool namnAndrat = andraNamnPodcast();
             bool kategoriAndrad = andraKategoriForPodd();
-            bool intervallAndrad = andraUppdateringsIntervallPodcast(); 
-
          
-            if (namnAndrat || kategoriAndrad || intervallAndrad)
+            if (namnAndrat || kategoriAndrad)
             {
                 uppdateraPoddLista();
                 resetFalt();

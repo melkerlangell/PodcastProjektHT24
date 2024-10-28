@@ -56,8 +56,6 @@
             textBoxKategori = new TextBox();
             labelKategori = new Label();
             labelPodd = new Label();
-            comboBoxIntervall = new ComboBox();
-            labelIntervall = new Label();
             labelBeskrivning = new Label();
             SuspendLayout();
             // 
@@ -82,7 +80,7 @@
             // 
             // btnAndra
             // 
-            btnAndra.Location = new Point(264, 190);
+            btnAndra.Location = new Point(266, 171);
             btnAndra.Name = "btnAndra";
             btnAndra.Size = new Size(67, 21);
             btnAndra.TabIndex = 2;
@@ -294,24 +292,6 @@
             labelPodd.TabIndex = 23;
             labelPodd.Text = "Podcast";
             // 
-            // comboBoxIntervall
-            // 
-            comboBoxIntervall.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxIntervall.FormattingEnabled = true;
-            comboBoxIntervall.Location = new Point(201, 161);
-            comboBoxIntervall.Name = "comboBoxIntervall";
-            comboBoxIntervall.Size = new Size(189, 23);
-            comboBoxIntervall.TabIndex = 24;
-            // 
-            // labelIntervall
-            // 
-            labelIntervall.AutoSize = true;
-            labelIntervall.Location = new Point(50, 164);
-            labelIntervall.Name = "labelIntervall";
-            labelIntervall.Size = new Size(143, 15);
-            labelIntervall.TabIndex = 25;
-            labelIntervall.Text = "Välj uppdateringsintervall:";
-            // 
             // labelBeskrivning
             // 
             labelBeskrivning.AutoSize = true;
@@ -327,8 +307,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1376, 796);
             Controls.Add(labelBeskrivning);
-            Controls.Add(labelIntervall);
-            Controls.Add(comboBoxIntervall);
             Controls.Add(labelPodd);
             Controls.Add(labelKategori);
             Controls.Add(textBoxKategori);
@@ -388,8 +366,6 @@
         private TextBox textBoxKategori;
         private Label labelKategori;
         private Label labelPodd;
-        private ComboBox comboBoxIntervall;
-        private Label labelIntervall;
         private Label labelBeskrivning;
     }
 }
