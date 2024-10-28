@@ -61,6 +61,7 @@
             comboBoxIntervall = new ComboBox();
             labelIntervall = new Label();
             labelUppdatering = new Label();
+            helpButton = new Button();
             SuspendLayout();
             // 
             // labelValjKategori
@@ -336,11 +337,22 @@
             labelUppdatering.Size = new Size(0, 15);
             labelUppdatering.TabIndex = 29;
             // 
+            // helpButton
+            // 
+            helpButton.Location = new Point(396, 161);
+            helpButton.Name = "helpButton";
+            helpButton.Size = new Size(30, 23);
+            helpButton.TabIndex = 30;
+            helpButton.Text = "?";
+            helpButton.UseVisualStyleBackColor = true;
+            helpButton.Click += helpButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1376, 796);
+            Controls.Add(helpButton);
             Controls.Add(labelUppdatering);
             Controls.Add(labelIntervall);
             Controls.Add(comboBoxIntervall);
@@ -409,5 +421,6 @@
         private Label labelIntervall;
         private ColumnHeader Uppdateringsintervall;
         private Label labelUppdatering;
+        private Button helpButton;
     }
 }

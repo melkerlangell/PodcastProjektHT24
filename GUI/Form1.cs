@@ -16,25 +16,21 @@ namespace GUI
         private PodcastController poddKontroll;
         private KategoriController katKontroll;
         private Validering validering;
-        
+
 
         public Form1()
         {
             InitializeComponent();
             poddKontroll = new PodcastController();
             katKontroll = new KategoriController();
-            validering = new Validering();  
-            startForm();
-        }
-
-        private void startForm()
-        {
+            validering = new Validering();
             hamtaAllaPoddar();
             hamtaAllaKategorier();
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
             UppdateringPoddar();
         }
+
 
 
         private void UppdateringPoddar()
@@ -46,11 +42,11 @@ namespace GUI
 
                 t.Tick += (sender, args) =>
                 {
-                    t.Stop();
+
                     try
                     {
                         poddKontroll.FetchBaraAvsnitt(p);
-                        labelUppdatering.Text = "Podcast: "+ p.Titel +" uppdaterades "+ DateTime.Now;
+                        labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
                         uppdateraPoddLista();
                     }
                     catch (Exception ex)
@@ -58,8 +54,7 @@ namespace GUI
                         validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
                     }
                 };
-
-                t.Start(); 
+                t.Start();
             }
         }
 
@@ -117,7 +112,7 @@ namespace GUI
             string egetNamn = textNamn.Text;
             string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
-            int valdIntervall = 0;
+            int valdIntervall = 120;
             if (validering.valideringNamn(comboBoxIntervall.Text))
             {
                 string[] intervall = comboBoxIntervall.Text.Split(' ');
@@ -135,16 +130,16 @@ namespace GUI
                     }
                     else
                     {
-                        
+
                         MessageBox.Show("Ange ett giltigt rss flöde");
                     }
-                    
+
                 }
                 else
                 {
                     MessageBox.Show("Flödet existerar redan, onödigt med dubbletter ;)");
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -216,14 +211,14 @@ namespace GUI
         private Boolean andraKategoriForPodd()
         {
 
-            string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;  
+            string? nyKategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : null;
             bool flagga = false;
 
             try
             {
                 if (listPodd.SelectedItems.Count > 0 && validering.valideringNamn(nyKategori))
                 {
-                    int valdPoddIndex = listPodd.SelectedIndices[0]; 
+                    int valdPoddIndex = listPodd.SelectedIndices[0];
 
                     poddKontroll.AndraPoddKategori(valdPoddIndex, nyKategori);
 
@@ -296,7 +291,6 @@ namespace GUI
             listBoxKategori.Items.Clear();
             comboBoxFiltrera.Items.Clear();
             hamtaAllaKategorier();
-            UppdateringPoddar();
             listBoxAvsnitt.Items.Clear();
         }
 
@@ -316,9 +310,9 @@ namespace GUI
             else
             {
                 MessageBox.Show("Välj en podcast i listan och ändra någon egenskap innan du sparar");
-                               
+
             }
-            
+
         }
 
         private void uppdateraListaOchCbx(string kategori)
@@ -395,7 +389,7 @@ namespace GUI
         {
             string nyttNamn = textBoxKategori.Text;
             int valdKategori = listBoxKategori.SelectedIndex;
-            
+
             try
             {
                 if (validering.valideringNamn(nyttNamn) && valdKategori != -1)
@@ -412,7 +406,8 @@ namespace GUI
                 {
                     MessageBox.Show("Välj kategorin du vill ändra namn på och ange det nya namnet i textfältet");
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 validering.visaFelmeddelande("Fel vid redigering av kategori", ex);
             }
@@ -422,20 +417,21 @@ namespace GUI
         {
             string valdKategori = comboBoxFiltrera.SelectedItem?.ToString();
             List<Kategori> katt = new List<Kategori>();
-            
-            if(valdKategori != null) { 
-            listPodd.Items.Clear();
+
+            if (valdKategori != null)
+            {
+                listPodd.Items.Clear();
                 var query = poddKontroll.getPoddar().Where(p => p.Kategori == valdKategori);
 
                 foreach (var p in query)
-            {
-                ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
-                podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
-                podcastItem.SubItems.Add(p.Titel);
-                podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
+                {
+                    ListViewItem podcastItem = new ListViewItem(p.EgetNamn);
+                    podcastItem.SubItems.Add(p.AntalAvsnitt.ToString());
+                    podcastItem.SubItems.Add(p.Titel);
+                    podcastItem.SubItems.Add(p.Kategori ?? "Ingen kategori");
 
-                listPodd.Items.Add(podcastItem);
-            }
+                    listPodd.Items.Add(podcastItem);
+                }
             }
         }
 
@@ -470,6 +466,10 @@ namespace GUI
             laddaCbxIntervall();
         }
 
-        
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
+                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft");
+        }
     }
 }
