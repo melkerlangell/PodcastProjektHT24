@@ -235,7 +235,7 @@
             // 
             listPodd.Columns.AddRange(new ColumnHeader[] { namn, antalAvsnitt, titel, kategori, Uppdateringsintervall });
             listPodd.FullRowSelect = true;
-            listPodd.Location = new Point(162, 226);
+            listPodd.Location = new Point(158, 226);
             listPodd.Name = "listPodd";
             listPodd.Size = new Size(553, 451);
             listPodd.TabIndex = 19;
@@ -332,7 +332,7 @@
             // labelUppdatering
             // 
             labelUppdatering.AutoSize = true;
-            labelUppdatering.Location = new Point(298, 680);
+            labelUppdatering.Location = new Point(158, 680);
             labelUppdatering.Name = "labelUppdatering";
             labelUppdatering.Size = new Size(0, 15);
             labelUppdatering.TabIndex = 29;
@@ -422,5 +422,7 @@
         private ColumnHeader Uppdateringsintervall;
         private Label labelUppdatering;
         private Button helpButton;
+        private Label labelTidTitel;
+        private Label labelNuvarandeTid;
     }
 }

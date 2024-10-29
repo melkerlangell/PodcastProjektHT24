@@ -25,6 +25,7 @@ namespace GUI
             katKontroll = new KategoriController();
             validering = new Validering();
             startaForm();
+            
         }
 
         private void startaForm()
@@ -94,6 +95,7 @@ namespace GUI
         }
         private void hamtaAllaPoddar()
         {
+            listPodd.BeginUpdate();
             List<Podcast> poddar = poddKontroll.getPoddar();
             if (poddar == null)
             {
@@ -110,6 +112,7 @@ namespace GUI
 
                 listPodd.Items.Add(podcastItem);
             }
+            listPodd.EndUpdate();
         }
 
         private void hamtaAllaKategorier()
@@ -176,6 +179,7 @@ namespace GUI
 
         private void listPodd_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBoxAvsnitt.BeginUpdate(); 
             listBoxAvsnitt.Items.Clear();
             richTextBeskrivning.Clear();
 
@@ -185,10 +189,11 @@ namespace GUI
 
                 foreach (Avsnitt episode in selectedPodcast.poddAvsnitt)
                 {
-
                     listBoxAvsnitt.Items.Add(episode);
                 }
             }
+
+            listBoxAvsnitt.EndUpdate();
         }
 
         private void listBoxAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
@@ -344,6 +349,8 @@ namespace GUI
 
         }
 
+        
+
         private void uppdateraListaOchCbx(string kategori)
         {
             cbxKategori.Items.Add(kategori);
@@ -498,7 +505,7 @@ namespace GUI
         private void helpButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
-                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft");
+                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
     }
 }
