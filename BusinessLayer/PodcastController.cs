@@ -46,49 +46,55 @@ namespace BusinessLayer
 
         public async Task FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
         {
-            using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
+            await Task.Run(() =>
             {
-
-                var poddFlode = await Task.Run(() => SyndicationFeed.Load(minXMLlasare));
-
-                Podcast enPodd = new Podcast
+                using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
                 {
-                    Titel = poddFlode.Title.Text,
-                    EgetNamn = egetNamn,
-                    Kategori = kategori,
-                    UrlRss = rssLank,
-                    uppdateringsIntervall = intervall,
-                    poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
+                    SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
+
+                    Podcast enPodd = new Podcast
+                    {
+                        Titel = poddFlode.Title.Text,
+                        EgetNamn = egetNamn,
+                        Kategori = kategori,
+                        UrlRss = rssLank,
+                        uppdateringsIntervall = intervall,
+                        poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
+                        {
+                            Title = item.Title.Text,
+                            PublishDate = item.PublishDate.DateTime,
+                            Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
+                        }).ToList()
+                    };
+
+                    enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+
+                    poddRep.Insert(enPodd);
+                }
+            });
+        }
+
+        public async Task FetchBaraAvsnitt(Podcast p)
+        {
+            await Task.Run(() =>
+            {
+                using (XmlReader minXMLlasare = XmlReader.Create(p.UrlRss))
+                {
+                    SyndicationFeed avsnittFlode = SyndicationFeed.Load(minXMLlasare);
+                    p.poddAvsnitt = avsnittFlode.Items.Select(item => new Avsnitt
                     {
                         Title = item.Title.Text,
                         PublishDate = item.PublishDate.DateTime,
                         Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
-                    }).ToList()
-                };
+                    }).ToList();
 
-                enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+                    int poddIndex = poddRep.GetAll().FindIndex(x => x.UrlRss.Equals(p.UrlRss));
 
-                await Task.Run(() => poddRep.Insert(enPodd));
-            }
+                    poddRep.Update(poddIndex, p);
+                }
+            });
         }
-
-        public void FetchBaraAvsnitt(Podcast p)
-        {
-            using(XmlReader minXMLlasare = XmlReader.Create(p.UrlRss))
-            {
-                SyndicationFeed avsnittFlode = SyndicationFeed.Load(minXMLlasare);
-                p.poddAvsnitt = avsnittFlode.Items.Select(item => new Avsnitt
-                {
-                    Title = item.Title.Text,
-                    PublishDate = item.PublishDate.DateTime,
-                    Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
-                }).ToList();
-
-                int poddIndex = poddRep.GetAll().FindIndex(x => x.UrlRss.Equals(p.UrlRss));
-
-                poddRep.Update(poddIndex, p);
-            }
-        }
+        
 
 
 

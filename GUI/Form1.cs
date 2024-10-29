@@ -36,13 +36,14 @@ namespace GUI
             UppdateringPoddar();
             UppdateraPodcastsVidStart();
         }
-        private void UppdateraPodcastsVidStart()
+
+        private async void UppdateraPodcastsVidStart()
         {
             foreach (Podcast p in poddKontroll.getPoddar())
             {
                 try
                 {
-                    poddKontroll.FetchBaraAvsnitt(p);
+                    await poddKontroll.FetchBaraAvsnitt(p);
                     uppdateraPoddLista(); 
                 }
                 catch (Exception ex)
@@ -54,19 +55,19 @@ namespace GUI
 
 
 
-        private void UppdateringPoddar()
+        private async void UppdateringPoddar()
         {
             foreach (Podcast p in poddKontroll.getPoddar())
             {
                 System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
                 t.Interval = p.uppdateringsIntervall * 60000;
 
-                t.Tick += (sender, args) =>
+                t.Tick += async (sender, args) =>
                 {
 
                     try
                     {
-                        poddKontroll.FetchBaraAvsnitt(p);
+                        await poddKontroll.FetchBaraAvsnitt(p);
                         p.AntalAvsnitt = p.poddAvsnitt.Count;
                         labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
                         uppdateringPoddUtanLista();
