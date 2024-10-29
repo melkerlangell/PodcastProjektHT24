@@ -44,11 +44,12 @@ namespace BusinessLayer
         }
 
 
-        public void FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
+        public async Task FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
         {
             using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
             {
-                SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
+
+                var poddFlode = await Task.Run(() => SyndicationFeed.Load(minXMLlasare));
 
                 Podcast enPodd = new Podcast
                 {
@@ -67,7 +68,7 @@ namespace BusinessLayer
 
                 enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
 
-                poddRep.Insert(enPodd);
+                await Task.Run(() => poddRep.Insert(enPodd));
             }
         }
 

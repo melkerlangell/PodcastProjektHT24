@@ -128,7 +128,7 @@ namespace GUI
         }
 
 
-        private void btnLaggTill_Click(object sender, EventArgs e)
+        private async void btnLaggTill_Click(object sender, EventArgs e)
         {
             string url = textURL.Text;
             string egetNamn = textNamn.Text;
@@ -147,7 +147,7 @@ namespace GUI
                 {
                     if (validering.valideringXml(url))
                     {
-                        poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
+                        await poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
                         uppdateraPoddLista();
                     }
                     else
