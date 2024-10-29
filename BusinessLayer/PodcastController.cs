@@ -84,7 +84,6 @@ namespace BusinessLayer
                 }).ToList();
 
                 poddRep.Update(poddRep.GetAll().FindIndex(x => x.UrlRss == p.UrlRss), p);
-                poddRep.SaveChanges();
             }
         }
 

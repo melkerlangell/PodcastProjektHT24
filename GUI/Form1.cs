@@ -24,6 +24,11 @@ namespace GUI
             poddKontroll = new PodcastController();
             katKontroll = new KategoriController();
             validering = new Validering();
+            startaForm();
+        }
+
+        private void startaForm()
+        {
             hamtaAllaPoddar();
             hamtaAllaKategorier();
             resetFalt();
@@ -31,7 +36,6 @@ namespace GUI
             UppdateringPoddar();
             UppdateraPodcastsVidStart();
         }
-
         private void UppdateraPodcastsVidStart()
         {
             foreach (Podcast p in poddKontroll.getPoddar())
