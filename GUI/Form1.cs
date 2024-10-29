@@ -69,7 +69,7 @@ namespace GUI
                         poddKontroll.FetchBaraAvsnitt(p);
                         p.AntalAvsnitt = p.poddAvsnitt.Count;
                         labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
-                        uppdateraPoddLista();
+                        uppdateringPoddUtanLista();
                     }
                     catch (Exception ex)
                     {
@@ -314,6 +314,12 @@ namespace GUI
             comboBoxFiltrera.Items.Clear();
             hamtaAllaKategorier();
             listBoxAvsnitt.Items.Clear();
+        }
+
+        private void uppdateringPoddUtanLista()
+        {
+            listPodd.Items.Clear();
+            hamtaAllaPoddar();
         }
 
 
