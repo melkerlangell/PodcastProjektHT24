@@ -117,7 +117,7 @@ namespace BusinessLayer
             foreach (var podd in poddar)
             {
                 
-                if (podd.Kategori == gammalKategori)
+                if (podd.Kategori.Equals(gammalKategori))
                 {
                     if (string.IsNullOrEmpty(nyKategori))
                     {

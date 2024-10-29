@@ -175,7 +175,7 @@ namespace GUI
             if (listBoxAvsnitt.SelectedItem != null)
             {
                 Avsnitt selectedEpisode = (Avsnitt)listBoxAvsnitt.SelectedItem;
-                richTextBeskrivning.Text = selectedEpisode.Description;
+                richTextBeskrivning.Text = "Datum: "+selectedEpisode.PublishDate + "\n"+"Beskrivning: "+selectedEpisode.Description;
             }
         }
 
@@ -421,7 +421,7 @@ namespace GUI
             if (valdKategori != null)
             {
                 listPodd.Items.Clear();
-                var query = poddKontroll.getPoddar().Where(p => p.Kategori == valdKategori);
+                var query = poddKontroll.getPoddar().Where(p => p.Kategori.Equals(valdKategori));
 
                 foreach (var p in query)
                 {

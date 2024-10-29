@@ -57,7 +57,7 @@ namespace BusinessLayer
 
             foreach(Podcast p in poddar)
             {
-                if(p.UrlRss == url)
+                if(p.UrlRss.Equals(url))
                 {
                     flagga = false;
                 }
