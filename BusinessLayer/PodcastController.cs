@@ -82,6 +82,9 @@ namespace BusinessLayer
                     PublishDate = item.PublishDate.DateTime,
                     Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
                 }).ToList();
+
+                poddRep.Update(poddRep.GetAll().FindIndex(x => x.UrlRss == p.UrlRss), p);
+                poddRep.SaveChanges();
             }
         }
 

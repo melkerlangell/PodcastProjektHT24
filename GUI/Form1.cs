@@ -29,6 +29,23 @@ namespace GUI
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
             UppdateringPoddar();
+            UppdateraPodcastsVidStart();
+        }
+
+        private void UppdateraPodcastsVidStart()
+        {
+            foreach (Podcast p in poddKontroll.getPoddar())
+            {
+                try
+                {
+                    poddKontroll.FetchBaraAvsnitt(p);
+                    uppdateraPoddLista(); 
+                }
+                catch (Exception ex)
+                {
+                    validering.visaFelmeddelande("Fel vid startuppdatering av podcast "+p.Titel, ex);
+                }
+            }
         }
 
 
@@ -46,6 +63,7 @@ namespace GUI
                     try
                     {
                         poddKontroll.FetchBaraAvsnitt(p);
+                        p.AntalAvsnitt = p.poddAvsnitt.Count;
                         labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
                         uppdateraPoddLista();
                     }
