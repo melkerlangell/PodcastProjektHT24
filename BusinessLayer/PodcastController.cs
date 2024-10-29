@@ -83,7 +83,9 @@ namespace BusinessLayer
                     Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
                 }).ToList();
 
-                poddRep.Update(poddRep.GetAll().FindIndex(x => x.UrlRss == p.UrlRss), p);
+                int poddIndex = poddRep.GetAll().FindIndex(x => x.UrlRss.Equals(p.UrlRss));
+
+                poddRep.Update(poddIndex, p);
             }
         }
 
