@@ -34,7 +34,6 @@ namespace GUI
             hamtaAllaKategorier();
             resetFalt();
             richTextBeskrivning.ReadOnly = true;
-            UppdateringPoddar();
             UppdateraPodcastsVidStart();
         }
 
@@ -44,6 +43,7 @@ namespace GUI
             {
                 try
                 {
+                    await Task.Delay(100);
                     await poddKontroll.FetchBaraAvsnitt(p);
                     uppdateraPoddLista(); 
                 }
@@ -56,31 +56,31 @@ namespace GUI
 
 
 
-        private async void UppdateringPoddar()
-        {
-            foreach (Podcast p in poddKontroll.getPoddar())
-            {
-                System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
-                t.Interval = p.uppdateringsIntervall * 60000;
+        //private async void UppdateringPoddar()
+        //{
+        //    foreach (Podcast p in poddKontroll.getPoddar())
+        //    {
+        //        System.Timers.Timer t = new System.Timers.Timer();
+        //        t.Interval = p.uppdateringsIntervall * 60000;
 
-                t.Tick += async (sender, args) =>
-                {
+        //        t.Elapsed += async (sender, args) =>
+        //        {
 
-                    try
-                    {
-                        await poddKontroll.FetchBaraAvsnitt(p);
-                        p.AntalAvsnitt = p.poddAvsnitt.Count;
-                        labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
-                        uppdateringPoddUtanLista();
-                    }
-                    catch (Exception ex)
-                    {
-                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-                    }
-                };
-                t.Start();
-            }
-        }
+        //            try
+        //            {
+        //                await poddKontroll.FetchBaraAvsnitt(p);
+        //                p.AntalAvsnitt = p.poddAvsnitt.Count;
+        //                labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
+        //                uppdateringPoddUtanLista();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+        //            }
+        //        };
+        //        t.Start();
+        //    }
+        //}
 
 
 
@@ -504,8 +504,9 @@ namespace GUI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
-                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            //MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
+            //    " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            MessageBox.Show("Vi fick aldrig den automatiska uppdateringen att fungera. Det uppdateras enbart en gång när programmet startas");
         }
     }
 }
