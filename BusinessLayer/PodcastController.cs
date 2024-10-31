@@ -76,25 +76,36 @@ namespace BusinessLayer
 
         public async Task FetchBaraAvsnitt(Podcast p)
         {
-            await Task.Run(() =>
+            try
             {
                 using (XmlReader minXMLlasare = XmlReader.Create(p.UrlRss))
                 {
-                    SyndicationFeed avsnittFlode = SyndicationFeed.Load(minXMLlasare);
-                    p.poddAvsnitt = avsnittFlode.Items.Select(item => new Avsnitt
+                    SyndicationFeed avsnittFlode = await Task.Run(() => SyndicationFeed.Load(minXMLlasare));
+
+                   
+                    p.poddAvsnitt.Clear();
+
+                    foreach (var item in avsnittFlode.Items)
                     {
-                        Title = item.Title.Text,
-                        PublishDate = item.PublishDate.DateTime,
-                        Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
-                    }).ToList();
+                        p.poddAvsnitt.Add(new Avsnitt
+                        {
+                            Title = item.Title.Text,
+                            PublishDate = item.PublishDate.DateTime,
+                            Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
+                        });
+                    }
 
                     int poddIndex = poddRep.GetAll().FindIndex(x => x.UrlRss.Equals(p.UrlRss));
-
-                    poddRep.Update(poddIndex, p);
+                    poddRep.UppdateraAvsnittLista(p.poddAvsnitt, poddIndex);
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching episodes: {ex.Message}");
+            }
         }
-        
+
+
 
 
 

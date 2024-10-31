@@ -9,6 +9,7 @@ namespace DataLayer
     {
         private string filNamn = Path.Combine(Directory.GetCurrentDirectory(), "poddar.xml");
         private string filKategorier = Path.Combine(Directory.GetCurrentDirectory(), "allakategorier.xml");
+        private static readonly Object r = new Object();
 
 
         public Serializer()
@@ -20,26 +21,48 @@ namespace DataLayer
 
         public void SparaPoddar(List<T> allaPoddar)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-
-            using (FileStream fil = new FileStream(filNamn, FileMode.Create, FileAccess.Write))
+            lock (r)
             {
-                serializer.Serialize(fil, allaPoddar); 
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+                try
+                {
+                    using (FileStream fil = new FileStream(filNamn, FileMode.Create, FileAccess.Write))
+                    {
+                        serializer.Serialize(fil, allaPoddar);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error vid sparande av poddar: {ex.Message}");
+                }
             }
         }
 
         public List<T> LasInPoddar()
         {
-            if (!File.Exists(filNamn))
+            lock (r)
             {
-                return new List<T>(); 
-            }
+                if (!File.Exists(filNamn))
+                {
+                    return new List<T>();
+                }
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
 
-            using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
-            {
-                return (List<T>)serializer.Deserialize(fil); 
+                try
+                {
+                    using (FileStream fil = new FileStream(filNamn, FileMode.Open, FileAccess.Read))
+                    {
+                        return (List<T>)serializer.Deserialize(fil);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine($"Error vid inläsning av poddar: {ex.Message}");
+                    return new List<T>();
+                }
             }
         }
 

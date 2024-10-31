@@ -16,6 +16,7 @@ namespace GUI
         private PodcastController poddKontroll;
         private KategoriController katKontroll;
         private Validering validering;
+        private List<System.Timers.Timer> timers = new List<System.Timers.Timer>();
 
 
         public Form1()
@@ -52,37 +53,9 @@ namespace GUI
                     validering.visaFelmeddelande("Fel vid startuppdatering av podcast "+p.Titel, ex);
                 }
             }
+
+            UppdateringPoddar();
         }
-
-
-
-        //private async void UppdateringPoddar()
-        //{
-        //    foreach (Podcast p in poddKontroll.getPoddar())
-        //    {
-        //        System.Timers.Timer t = new System.Timers.Timer();
-        //        t.Interval = p.uppdateringsIntervall * 60000;
-
-        //        t.Elapsed += async (sender, args) =>
-        //        {
-
-        //            try
-        //            {
-        //                await poddKontroll.FetchBaraAvsnitt(p);
-        //                p.AntalAvsnitt = p.poddAvsnitt.Count;
-        //                labelUppdatering.Text = "Podcast: " + p.Titel + " uppdaterades " + DateTime.Now;
-        //                uppdateringPoddUtanLista();
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-        //            }
-        //        };
-        //        t.Start();
-        //    }
-        //}
-
-
 
         private void laddaCbxIntervall()
         {
@@ -220,6 +193,7 @@ namespace GUI
 
                     if (bekraftaVal == DialogResult.Yes)
                     {
+                        timers[valdPodd].Stop();
                         poddKontroll.TaBortPodd(valdPodd);
                         uppdateraPoddLista();
                     }
@@ -504,9 +478,47 @@ namespace GUI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
-            //    " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
-            MessageBox.Show("Vi fick aldrig den automatiska uppdateringen att fungera. Det uppdateras enbart en gång när programmet startas");
+            MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
+                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            
+        }
+
+        private async void UppdateringPoddar()
+        {
+            foreach (Podcast p in poddKontroll.getPoddar())
+            {
+                System.Timers.Timer t = new System.Timers.Timer
+                {
+                    Interval = p.uppdateringsIntervall * 60000,
+                    AutoReset = true
+                };
+
+                t.Elapsed += async (sender, args) =>
+                {
+                    try
+                    {
+                        await poddKontroll.FetchBaraAvsnitt(p);
+                        p.AntalAvsnitt = p.poddAvsnitt.Count;
+
+                        labelUppdatering.Invoke((MethodInvoker)delegate
+                        {
+                            if (listBoxUpd.Items.Count > listPodd.Items.Count)
+                            {
+                                listBoxUpd.Items.Clear();
+                            }
+
+                            listBoxUpd.Items.Add(p.Titel + " uppdaterades " + DateTime.Now);
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+                    }
+                };
+
+                timers.Add(t);
+                t.Start();
+            }
         }
     }
 }

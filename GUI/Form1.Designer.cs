@@ -62,6 +62,7 @@
             labelIntervall = new Label();
             labelUppdatering = new Label();
             helpButton = new Button();
+            listBoxUpd = new ListBox();
             SuspendLayout();
             // 
             // labelValjKategori
@@ -332,10 +333,11 @@
             // labelUppdatering
             // 
             labelUppdatering.AutoSize = true;
-            labelUppdatering.Location = new Point(158, 680);
+            labelUppdatering.Location = new Point(414, 680);
             labelUppdatering.Name = "labelUppdatering";
-            labelUppdatering.Size = new Size(0, 15);
+            labelUppdatering.Size = new Size(83, 15);
             labelUppdatering.TabIndex = 29;
+            labelUppdatering.Text = "Uppdateringar";
             // 
             // helpButton
             // 
@@ -347,11 +349,21 @@
             helpButton.UseVisualStyleBackColor = true;
             helpButton.Click += helpButton_Click;
             // 
+            // listBoxUpd
+            // 
+            listBoxUpd.FormattingEnabled = true;
+            listBoxUpd.ItemHeight = 15;
+            listBoxUpd.Location = new Point(158, 713);
+            listBoxUpd.Name = "listBoxUpd";
+            listBoxUpd.Size = new Size(553, 64);
+            listBoxUpd.TabIndex = 31;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1376, 796);
+            Controls.Add(listBoxUpd);
             Controls.Add(helpButton);
             Controls.Add(labelUppdatering);
             Controls.Add(labelIntervall);
@@ -424,5 +436,6 @@
         private Button helpButton;
         private Label labelTidTitel;
         private Label labelNuvarandeTid;
+        private ListBox listBoxUpd;
     }
 }

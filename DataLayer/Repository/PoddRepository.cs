@@ -38,6 +38,15 @@ namespace DataLayer.Repository
             }
         }
 
+        public void UppdateraAvsnittLista(List<Avsnitt> list, int index)
+        {
+            if(index >= 0 && index < ListPoddar.Count)
+            {
+                ListPoddar[index].poddAvsnitt = list; 
+                SaveChanges();
+            }
+        }
+
         public void Delete(int index)
         {
             ListPoddar.RemoveAt(index);
