@@ -499,7 +499,7 @@ namespace GUI
                         await poddKontroll.FetchBaraAvsnitt(p);
                         p.AntalAvsnitt = p.poddAvsnitt.Count;
 
-                        labelUppdatering.Invoke((MethodInvoker)delegate
+                        listBoxUpd.Invoke((MethodInvoker)delegate
                         {
                             if (listBoxUpd.Items.Count > listPodd.Items.Count)
                             {
