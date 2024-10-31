@@ -44,7 +44,6 @@ namespace GUI
             {
                 try
                 {
-                    await Task.Delay(100);
                     await poddKontroll.FetchBaraAvsnitt(p);
                     uppdateraPoddLista(); 
                 }
