@@ -177,53 +177,69 @@ namespace BusinessLayer
 
         private async void StartaTimerPaNyPodd(Podcast p)
         {
-            System.Timers.Timer timer = new System.Timers.Timer()
+            if (p.uppdateringsIntervall <= 0)
             {
-                Interval = p.uppdateringsIntervall * IntervallMs,
-                AutoReset = true
-            };
+                return;
+            }
+            else
+            {
 
-            timer.Elapsed += async (sender, args) =>
-            {
-                try
+
+                System.Timers.Timer timer = new System.Timers.Timer()
                 {
-                    await FetchBaraAvsnitt(p);
-                    p.AntalAvsnitt = p.poddAvsnitt.Count;
-                    PodcastUpdated?.Invoke($"'{p.Titel}' har uppdaterats {DateTime.Now}");
-                }
-                catch (Exception ex)
+                    Interval = p.uppdateringsIntervall * IntervallMs,
+                    AutoReset = true
+                };
+
+                timer.Elapsed += async (sender, args) =>
                 {
-                    validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-                }
-            };
-            timers.Add(timer);
-            timer.Start();
+                    try
+                    {
+                        await FetchBaraAvsnitt(p);
+                        p.AntalAvsnitt = p.poddAvsnitt.Count;
+                        PodcastUpdated?.Invoke($"'{p.Titel}' har uppdaterats {DateTime.Now}");
+                    }
+                    catch (Exception ex)
+                    {
+                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+                    }
+                };
+                timers.Add(timer);
+                timer.Start();
+            }
 
         }
 
         private async void StartaTimerPaNyPodd(Podcast p, int intervall)
         {
-            System.Timers.Timer timer = new System.Timers.Timer()
+            if (p.uppdateringsIntervall <= 0)
             {
-                Interval = intervall * IntervallMs,
-                AutoReset = true
-            };
+                return;
+            }
+            else
+            {
+                System.Timers.Timer timer = new System.Timers.Timer()
+                {
+                    Interval = intervall * IntervallMs,
+                    AutoReset = true
+                };
 
-            timer.Elapsed += async (sender, args) =>
-            {
-                try
+                timer.Elapsed += async (sender, args) =>
                 {
-                    await FetchBaraAvsnitt(p);
-                    p.AntalAvsnitt = p.poddAvsnitt.Count;
-                    PodcastUpdated?.Invoke($"'{p.Titel}' har uppdaterats {DateTime.Now}");
-                }
-                catch (Exception ex)
-                {
-                    validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-                }
-            };
-            timers.Add(timer);
-            timer.Start();
+                    try
+                    {
+                        await FetchBaraAvsnitt(p);
+                        p.AntalAvsnitt = p.poddAvsnitt.Count;
+                        PodcastUpdated?.Invoke($"'{p.Titel}' har uppdaterats {DateTime.Now}");
+                    }
+                    catch (Exception ex)
+                    {
+                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+                    }
+                };
+                timers.Add(timer);
+                timer.Start();
+            }
 
         }
 
@@ -232,27 +248,35 @@ namespace BusinessLayer
         {
             foreach (Podcast p in getPoddar())
             {
-                System.Timers.Timer t = new System.Timers.Timer
+                if (p.uppdateringsIntervall <= 0)
                 {
-                    Interval = p.uppdateringsIntervall * IntervallMs,
-                    AutoReset = true
-                };
+                    return;
+                }
+                else
+                {
 
-                t.Elapsed += async (sender, args) =>
-                {
-                    try
+                    System.Timers.Timer t = new System.Timers.Timer
                     {
-                        await FetchBaraAvsnitt(p);
-                        p.AntalAvsnitt = p.poddAvsnitt.Count;
-                        PodcastUpdated?.Invoke($"Podcast '{p.Titel}' har uppdaterats {DateTime.Now}");
-                    }
-                    catch (Exception ex)
+                        Interval = p.uppdateringsIntervall * IntervallMs,
+                        AutoReset = true
+                    };
+
+                    t.Elapsed += async (sender, args) =>
                     {
-                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-                    }
-                };
-                timers.Add(t);
-                t.Start();
+                        try
+                        {
+                            await FetchBaraAvsnitt(p);
+                            p.AntalAvsnitt = p.poddAvsnitt.Count;
+                            PodcastUpdated?.Invoke($"Podcast '{p.Titel}' har uppdaterats {DateTime.Now}");
+                        }
+                        catch (Exception ex)
+                        {
+                            validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
+                        }
+                    };
+                    timers.Add(t);
+                    t.Start();
+                }
             }
         }
     }
