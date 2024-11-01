@@ -68,25 +68,40 @@ namespace DataLayer
 
         public void SparaKategorier(List<T> allaKategorier)
         {
-            XmlSerializer serializer = new XmlSerializer (typeof(List<T>));
-            using(FileStream fil = new FileStream(filKategorier, FileMode.Create, FileAccess.Write))
+            try
             {
-                serializer.Serialize(fil, allaKategorier);
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                using (FileStream fil = new FileStream(filKategorier, FileMode.Create, FileAccess.Write))
+                {
+                    serializer.Serialize(fil, allaKategorier);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error vid sparande av kategorier: {ex.Message}");
             }
         }
 
         public List<T> LasInKategorier()
         {
-            if (!File.Exists(filKategorier))
+            try
             {
-                return new List<T>();
+                if (!File.Exists(filKategorier))
+                {
+                    return new List<T>();
+                }
+
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+                using (FileStream fil = new FileStream(filKategorier, FileMode.Open, FileAccess.Read))
+                {
+                    return (List<T>)serializer.Deserialize(fil);
+                }
             }
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-
-            using (FileStream fil = new FileStream(filKategorier, FileMode.Open, FileAccess.Read))
+            catch (Exception ex)
             {
-                return (List<T>)serializer.Deserialize(fil);
+                Console.WriteLine($"Error vid inläsning av kategorier: {ex.Message}");
+                return new List<T>();
             }
         }
     }

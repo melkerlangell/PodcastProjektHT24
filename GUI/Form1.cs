@@ -16,9 +16,7 @@ namespace GUI
         private PodcastController poddKontroll;
         private KategoriController katKontroll;
         private Validering validering;
-        private List<System.Timers.Timer> timers = new List<System.Timers.Timer>();
-
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -33,19 +31,62 @@ namespace GUI
         {
             hamtaAllaPoddar();
             hamtaAllaKategorier();
-            resetFalt();
             richTextBeskrivning.ReadOnly = true;
             UppdateraPodcastsVidStart();
+            poddKontroll.PodcastUpdated += OnUppdateringMeddelande;
+            poddKontroll.StartaTimersPaBefintligaPoddar();
+            resetFalt();
+
+
         }
+
+        private void OnUppdateringMeddelande(string message)
+        {
+            if (InvokeRequired)
+            {
+                
+                BeginInvoke(new Action<string>(OnUppdateringMeddelande), message);
+            }
+            else
+            {
+                if(listBoxUpd.Items.Count > listPodd.Items.Count)
+                {
+                    listBoxUpd.Items.Clear();
+                }
+                
+                listBoxUpd.Items.Add(message);
+            }
+            if (listPodd.SelectedItems.Count > 0)
+            {
+                var selectedPodcast = poddKontroll.getPoddar()[listPodd.SelectedIndices[0]];
+                uppdateringAvsnittListaVidHamtning(selectedPodcast);
+            }
+        }
+
+        private void uppdateringAvsnittListaVidHamtning(Podcast selectedPodcast)
+        {
+            listBoxAvsnitt.BeginUpdate();
+            listBoxAvsnitt.Items.Clear();
+
+            foreach (Avsnitt episode in selectedPodcast.poddAvsnitt)
+            {
+                listBoxAvsnitt.Items.Add(episode);
+            }
+
+            listBoxAvsnitt.EndUpdate();
+        }
+
 
         private async void UppdateraPodcastsVidStart()
         {
+            bool flagga = false;
             foreach (Podcast p in poddKontroll.getPoddar())
             {
                 try
                 {
                     await poddKontroll.FetchBaraAvsnitt(p);
-                    uppdateraPoddLista(); 
+                    flagga = true;
+                    
                 }
                 catch (Exception ex)
                 {
@@ -53,7 +94,10 @@ namespace GUI
                 }
             }
 
-            UppdateringPoddar();
+            if (flagga)
+            {
+                listBoxUpd.Items.Add("Alla poddar uppdaterades vid start");
+            }
         }
 
         private void laddaCbxIntervall()
@@ -192,7 +236,6 @@ namespace GUI
 
                     if (bekraftaVal == DialogResult.Yes)
                     {
-                        timers[valdPodd].Stop();
                         poddKontroll.TaBortPodd(valdPodd);
                         uppdateraPoddLista();
                     }
@@ -284,23 +327,6 @@ namespace GUI
             return flagga;
         }
 
-        private void uppdateraPoddLista()
-        {
-            listPodd.Items.Clear();
-            hamtaAllaPoddar();
-            cbxKategori.Items.Clear();
-            listBoxKategori.Items.Clear();
-            comboBoxFiltrera.Items.Clear();
-            hamtaAllaKategorier();
-            listBoxAvsnitt.Items.Clear();
-        }
-
-        private void uppdateringPoddUtanLista()
-        {
-            listPodd.Items.Clear();
-            hamtaAllaPoddar();
-        }
-
 
         private void btnAndra_Click_1(object sender, EventArgs e)
         {
@@ -321,8 +347,16 @@ namespace GUI
             }
 
         }
-
-        
+        private void uppdateraPoddLista()
+        {
+            listPodd.Items.Clear();
+            hamtaAllaPoddar();
+            cbxKategori.Items.Clear();
+            listBoxKategori.Items.Clear();
+            comboBoxFiltrera.Items.Clear();
+            hamtaAllaKategorier();
+            listBoxAvsnitt.Items.Clear();
+        }
 
         private void uppdateraListaOchCbx(string kategori)
         {
@@ -337,7 +371,6 @@ namespace GUI
             listBoxKategori.Items.RemoveAt(index);
             comboBoxFiltrera.Items.RemoveAt(index);
         }
-
 
 
         private void DeleteKategori_Click(object sender, EventArgs e)
@@ -473,51 +506,6 @@ namespace GUI
             textURL.Text = "";
             comboBoxIntervall.Items.Clear();
             laddaCbxIntervall();
-        }
-
-        private void helpButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("När du lägger till en podcast och väljer uppdateringsintervall eller när du ändrar intervallet för en podcast" +
-                " måste du starta om applikationen för att den automatiska uppdateringen ska tas i kraft", "Automatisk Uppdatering", MessageBoxButtons.OK, MessageBoxIcon.Question);
-            
-        }
-
-        private async void UppdateringPoddar()
-        {
-            foreach (Podcast p in poddKontroll.getPoddar())
-            {
-                System.Timers.Timer t = new System.Timers.Timer
-                {
-                    Interval = p.uppdateringsIntervall * 60000,
-                    AutoReset = true
-                };
-
-                t.Elapsed += async (sender, args) =>
-                {
-                    try
-                    {
-                        await poddKontroll.FetchBaraAvsnitt(p);
-                        p.AntalAvsnitt = p.poddAvsnitt.Count;
-
-                        listBoxUpd.Invoke((MethodInvoker)delegate
-                        {
-                            if (listBoxUpd.Items.Count > listPodd.Items.Count)
-                            {
-                                listBoxUpd.Items.Clear();
-                            }
-
-                            listBoxUpd.Items.Add(p.Titel + " uppdaterades " + DateTime.Now);
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        validering.visaFelmeddelande("Fel vid uppdatering av podcast " + p.Titel, ex);
-                    }
-                };
-
-                timers.Add(t);
-                t.Start();
-            }
         }
     }
 }

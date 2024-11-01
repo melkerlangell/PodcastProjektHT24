@@ -61,7 +61,6 @@
             comboBoxIntervall = new ComboBox();
             labelIntervall = new Label();
             labelUppdatering = new Label();
-            helpButton = new Button();
             listBoxUpd = new ListBox();
             SuspendLayout();
             // 
@@ -333,38 +332,27 @@
             // labelUppdatering
             // 
             labelUppdatering.AutoSize = true;
-            labelUppdatering.Location = new Point(414, 680);
+            labelUppdatering.Location = new Point(396, 709);
             labelUppdatering.Name = "labelUppdatering";
             labelUppdatering.Size = new Size(83, 15);
             labelUppdatering.TabIndex = 29;
             labelUppdatering.Text = "Uppdateringar";
             // 
-            // helpButton
-            // 
-            helpButton.Location = new Point(396, 161);
-            helpButton.Name = "helpButton";
-            helpButton.Size = new Size(30, 23);
-            helpButton.TabIndex = 30;
-            helpButton.Text = "?";
-            helpButton.UseVisualStyleBackColor = true;
-            helpButton.Click += helpButton_Click;
-            // 
             // listBoxUpd
             // 
             listBoxUpd.FormattingEnabled = true;
             listBoxUpd.ItemHeight = 15;
-            listBoxUpd.Location = new Point(158, 713);
+            listBoxUpd.Location = new Point(158, 727);
             listBoxUpd.Name = "listBoxUpd";
-            listBoxUpd.Size = new Size(553, 64);
+            listBoxUpd.Size = new Size(553, 169);
             listBoxUpd.TabIndex = 31;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1376, 796);
+            ClientSize = new Size(1376, 908);
             Controls.Add(listBoxUpd);
-            Controls.Add(helpButton);
             Controls.Add(labelUppdatering);
             Controls.Add(labelIntervall);
             Controls.Add(comboBoxIntervall);
@@ -433,7 +421,6 @@
         private Label labelIntervall;
         private ColumnHeader Uppdateringsintervall;
         private Label labelUppdatering;
-        private Button helpButton;
         private Label labelTidTitel;
         private Label labelNuvarandeTid;
         private ListBox listBoxUpd;
