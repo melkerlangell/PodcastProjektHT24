@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             labelValjKategori = new Label();
             btnLaggTill = new Button();
             btnAndra = new Button();
@@ -380,7 +379,6 @@
             Controls.Add(btnAndra);
             Controls.Add(btnLaggTill);
             Controls.Add(labelValjKategori);
-            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Podcast";
             ResumeLayout(false);
