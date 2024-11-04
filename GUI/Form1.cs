@@ -27,28 +27,31 @@ namespace GUI
             
         }
 
+        //samlar alla metoder som ska köras vid start för att lättare kunna justera dem
         private void startaForm()
         {
             hamtaAllaPoddar();
             hamtaAllaKategorier();
             richTextBeskrivning.ReadOnly = true;
             UppdateraPodcastsVidStart();
+
+            //logik för timers
             poddKontroll.PodcastUpdated += OnUppdateringMeddelande;
             poddKontroll.StartaTimersPaBefintligaPoddar();
             resetFalt();
-
-
         }
 
+        //metod för att visa meddelande då podcast uppdateas
         private void OnUppdateringMeddelande(string message)
         {
             if (InvokeRequired)
             {
-                
+                //måste göra en egen "invoke" eftersom det är flera trådar som arbetar samtidigt
                 BeginInvoke(new Action<string>(OnUppdateringMeddelande), message);
             }
             else
             {
+                //tömma uppdateringsboxen 
                 if(listBoxUpd.Items.Count > listPodd.Items.Count)
                 {
                     listBoxUpd.Items.Clear();
@@ -56,13 +59,14 @@ namespace GUI
                 
                 listBoxUpd.Items.Add(message);
             }
+
+            //för att avsnitten ska uppdateras direkt i avsnittboxen, så man slipper klicka på en podcast igen för att visa nya avsnitt
             if (listPodd.SelectedItems.Count > 0)
             {
                 var selectedPodcast = poddKontroll.getPoddar()[listPodd.SelectedIndices[0]];
                 uppdateringAvsnittListaVidHamtning(selectedPodcast);
             }
         }
-
         private void uppdateringAvsnittListaVidHamtning(Podcast selectedPodcast)
         {
             listBoxAvsnitt.BeginUpdate();
@@ -77,6 +81,7 @@ namespace GUI
         }
 
 
+        //metod för att hämta nya avsnitt för alla sparade poddar vid start
         private async void UppdateraPodcastsVidStart()
         {
             bool flagga = false;
@@ -96,10 +101,11 @@ namespace GUI
 
             if (flagga)
             {
-                listBoxUpd.Items.Add("Alla poddar uppdaterades vid start");
+                listBoxUpd.Items.Add("Alla poddar uppdaterades vid start "+DateTime.Now);
             }
         }
 
+        //hårdkodade intervallval
         private void laddaCbxIntervall()
         {
             comboBoxIntervall.Items.Add("1 minut");
@@ -109,6 +115,8 @@ namespace GUI
             comboBoxIntervall.Items.Add("60 minuter");
 
         }
+
+        //hämtar alla sparade poddar och fyller listan
         private void hamtaAllaPoddar()
         {
             listPodd.BeginUpdate();
@@ -131,6 +139,7 @@ namespace GUI
             listPodd.EndUpdate();
         }
 
+        //hämtar alla kategorier och fyller listan
         private void hamtaAllaKategorier()
         {
             List<Kategori> kategorier = katKontroll.getKategorier();
@@ -148,12 +157,15 @@ namespace GUI
         }
 
 
+        //knapp för att lägga till nytt flöde
         private async void btnLaggTill_Click(object sender, EventArgs e)
         {
+            //hämtar alla ifyllda värden i UI
             string url = textURL.Text;
             string egetNamn = textNamn.Text;
             string? kategori = cbxKategori.SelectedItem != null ? cbxKategori.SelectedItem.ToString() : "-";
 
+            //standardintervall ifall inget är valt (error ifall man la 0)
             int valdIntervall = 120;
             if (validering.valideringNamn(comboBoxIntervall.Text))
             {
@@ -163,36 +175,36 @@ namespace GUI
 
             try
             {
+                //validering, testar hämta flödet för att se att det är ett rss flöde
                 if (validering.poddFinnsInte(url))
                 {
                     if (validering.valideringXml(url))
                     {
+                        //hämta podden
                         await poddKontroll.FetchRssPoddar(url, egetNamn, kategori, valdIntervall);
                         uppdateraPoddLista();
                     }
                     else
                     {
-
                         MessageBox.Show("Ange ett giltigt rss flöde");
                     }
-
                 }
                 else
                 {
                     MessageBox.Show("Flödet existerar redan, onödigt med dubbletter ;)");
                 }
-
-
             }
             catch (Exception ex)
             {
                 validering.visaFelmeddelande("Fel vid hämtning av poddar", ex);
             }
 
+            //återställer fälten
             resetFalt();
 
         }
 
+        //när man väljer ett objekt i podcast listan
         private void listPodd_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxAvsnitt.BeginUpdate(); 
@@ -201,6 +213,7 @@ namespace GUI
 
             if (listPodd.SelectedItems.Count > 0)
             {
+                //fyller avsnittslistan med avsnitt som hör till den valda podden, kollar på index
                 var selectedPodcast = poddKontroll.getPoddar()[listPodd.SelectedIndices[0]];
 
                 foreach (Avsnitt episode in selectedPodcast.poddAvsnitt)
@@ -212,19 +225,21 @@ namespace GUI
             listBoxAvsnitt.EndUpdate();
         }
 
+        //när man väljer ett avsnitt
         private void listBoxAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
             richTextBeskrivning.Clear();
 
             if (listBoxAvsnitt.SelectedItem != null)
             {
+                //visar datum för avsnittet och beskrivningen
                 Avsnitt selectedEpisode = (Avsnitt)listBoxAvsnitt.SelectedItem;
                 richTextBeskrivning.Text = "Datum: "+selectedEpisode.PublishDate + "\n"+"Beskrivning: "+selectedEpisode.Description;
             }
         }
 
 
-
+        //knapp för att ta bort podcast
         private void btnTaBort_Click(object sender, EventArgs e)
         {
             if (listPodd.SelectedItems.Count > 0)
@@ -232,6 +247,8 @@ namespace GUI
                 try
                 {
                     int valdPodd = listPodd.SelectedIndices[0];
+
+                    //bekräftelse på borttagning
                     var bekraftaVal = MessageBox.Show("Är du säker på att du vill ta bort flödet?", "Bekräfta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (bekraftaVal == DialogResult.Yes)
@@ -252,6 +269,9 @@ namespace GUI
             resetFalt();
         }
 
+
+        //logik för att ändra värden på en podcast
+        //tre stycken bool metoder som validerar och kör metoder för kategori, intervall och namn
         private Boolean andraKategoriForPodd()
         {
 
@@ -330,6 +350,7 @@ namespace GUI
 
         private void btnAndra_Click_1(object sender, EventArgs e)
         {
+            //kör de tre metoderna
             bool namnAndrat = andraNamnPodcast();
             bool kategoriAndrad = andraKategoriForPodd();
             bool intervallAndrad = andraIntervallPodcast();
@@ -347,6 +368,8 @@ namespace GUI
             }
 
         }
+
+        //metod för att uppdatera listan med poddar
         private void uppdateraPoddLista()
         {
             listPodd.Items.Clear();
@@ -358,6 +381,7 @@ namespace GUI
             listBoxAvsnitt.Items.Clear();
         }
 
+        //två metoder för att att uppdatera kategorier
         private void uppdateraListaOchCbx(string kategori)
         {
             cbxKategori.Items.Add(kategori);
@@ -373,6 +397,7 @@ namespace GUI
         }
 
 
+        //borttagning av kategori
         private void DeleteKategori_Click(object sender, EventArgs e)
         {
             int valdKategori = listBoxKategori.SelectedIndex;
@@ -380,6 +405,7 @@ namespace GUI
             {
                 if (valdKategori != -1)
                 {
+                    //bekräfta val
                     DialogResult dialogResult = MessageBox.Show("Är du säker på att du vill ta bort denna kategori?", "Bekräfta borttagning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (dialogResult == DialogResult.Yes)
@@ -404,6 +430,7 @@ namespace GUI
             }
         }
 
+        //lägga till kategori
         private void AddKategori_Click(object sender, EventArgs e)
         {
             string nyKategori = textBoxKategori.Text;
@@ -427,6 +454,7 @@ namespace GUI
             }
         }
 
+        //redigera kategori
         private void EditKategori_Click(object sender, EventArgs e)
         {
             string nyttNamn = textBoxKategori.Text;
@@ -441,8 +469,6 @@ namespace GUI
                     poddKontroll.UppdateraPodcastsKategori(vald, nyttNamn);
 
                     uppdateraPoddLista();
-
-
                 }
                 else
                 {

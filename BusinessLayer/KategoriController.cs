@@ -23,6 +23,7 @@ namespace BusinessLayer
             validering = new Validering();
         }
 
+        
         public List<Kategori> getKategorier()
         {
             return katRep.GetAll();
@@ -55,10 +56,4 @@ namespace BusinessLayer
             }
         }
     }
-
-
-
-
-
-
 }

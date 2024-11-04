@@ -26,6 +26,8 @@ namespace BusinessLayer
             poddRep = new PoddRepository();
             validering = new Validering();
             timers = new List<System.Timers.Timer>();
+
+            //hårdkodat 1 minut i millisekunder
             IntervallMs = 60000;
         }
 
@@ -51,6 +53,8 @@ namespace BusinessLayer
         }
 
 
+        //metod för att hämta rss flöde
+        //användning av syndicationfeed och xmlläsare för att lägra ner den hämntade datan som objekt
         public async Task FetchRssPoddar(string rssLank, string egetNamn, string kategori, int intervall)
         {
             try
@@ -90,6 +94,9 @@ namespace BusinessLayer
             }
         }
 
+
+        //metod för att hämta enbart avsnitt till en podd
+        //används för att timern ska kunna uppdatera nya avsnitt utan att ta bort det egenvalda namnet eller kategorin
         public async Task FetchBaraAvsnitt(Podcast p)
         {
             try
@@ -174,7 +181,7 @@ namespace BusinessLayer
             }
         }
 
-
+        //logik för användning av timers
         private async void StartaTimer(Podcast p, int? intervall = null)
         {
             if (p.uppdateringsIntervall <= 0)

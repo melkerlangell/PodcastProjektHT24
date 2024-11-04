@@ -7,6 +7,7 @@ namespace DataLayer
 {
     public class Serializer<T>
     {
+        //skapar två dokument, ett för podcasts och ett för kategorier
         private string filNamn = Path.Combine(Directory.GetCurrentDirectory(), "poddar.xml");
         private string filKategorier = Path.Combine(Directory.GetCurrentDirectory(), "allakategorier.xml");
         private static readonly Object r = new Object();
@@ -19,8 +20,12 @@ namespace DataLayer
             settings.DtdProcessing = DtdProcessing.Parse;
         }
 
+
+        //logik för att jobba med podcast dokumentet
         public void SparaPoddar(List<T> allaPoddar)
         {
+            //använder lock vilket gör att trådar som använder metoden ställer sig i kö för att vänta på varandra
+            //behövs vid timern ifall flera poddar har nya avsnitt så blir det fel när det blir två skrivningar samtidigt i samma dokument
             lock (r)
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
@@ -66,6 +71,8 @@ namespace DataLayer
             }
         }
 
+
+        //logik för att jobba med kategori dokumentet
         public void SparaKategorier(List<T> allaKategorier)
         {
             try
