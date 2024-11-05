@@ -111,9 +111,8 @@
             // 
             // comboBoxFiltrera
             // 
-            comboBoxFiltrera.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFiltrera.FormattingEnabled = true;
-            comboBoxFiltrera.Location = new Point(468, 169);
+            comboBoxFiltrera.Location = new Point(463, 164);
             comboBoxFiltrera.Name = "comboBoxFiltrera";
             comboBoxFiltrera.Size = new Size(140, 23);
             comboBoxFiltrera.TabIndex = 5;
@@ -130,7 +129,7 @@
             // 
             // btnAterstall
             // 
-            btnAterstall.Location = new Point(614, 169);
+            btnAterstall.Location = new Point(614, 166);
             btnAterstall.Name = "btnAterstall";
             btnAterstall.Size = new Size(67, 21);
             btnAterstall.TabIndex = 7;
