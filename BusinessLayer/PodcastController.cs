@@ -59,32 +59,34 @@ namespace BusinessLayer
         {
             try
             {
-                using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
+                await Task.Run(() =>
                 {
-                    SyndicationFeed poddFlode = await Task.Run(() => SyndicationFeed.Load(minXMLlasare));
-
-                    Podcast enPodd = new Podcast
+                    using (XmlReader minXMLlasare = XmlReader.Create(rssLank))
                     {
-                        Titel = poddFlode.Title.Text,
-                        EgetNamn = egetNamn,
-                        Kategori = kategori,
-                        UrlRss = rssLank,
-                        uppdateringsIntervall = intervall,
-                        poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
+                        SyndicationFeed poddFlode = SyndicationFeed.Load(minXMLlasare);
+
+                        Podcast enPodd = new Podcast
                         {
-                           Title = item.Title.Text,
-                           PublishDate = item.PublishDate.DateTime,
-                           Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
-                        }).ToList()
-                    };
+                            Titel = poddFlode.Title.Text,
+                            EgetNamn = egetNamn,
+                            Kategori = kategori,
+                            UrlRss = rssLank,
+                            uppdateringsIntervall = intervall,
+                            poddAvsnitt = poddFlode.Items.Select(item => new Avsnitt
+                            {
+                                Title = item.Title.Text,
+                                PublishDate = item.PublishDate.DateTime,
+                                Description = item.Summary?.Text ?? "Ingen beskrivning finns tillgänglig"
+                            }).ToList()
+                        };
 
-                    StartaTimerPaNyPodd(enPodd);
+                        StartaTimerPaNyPodd(enPodd);
 
-                    enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
+                        enPodd.AntalAvsnitt = enPodd.poddAvsnitt.Count;
 
-                    poddRep.Insert(enPodd);
-                }
-                
+                        poddRep.Insert(enPodd);
+                    }
+                });
             }
             catch (Exception ex)
             {
