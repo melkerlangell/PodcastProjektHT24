@@ -484,7 +484,6 @@ namespace GUI
         private void FiltreraKategori()
         {
             string valdKategori = comboBoxFiltrera.SelectedItem?.ToString();
-            List<Kategori> katt = new List<Kategori>();
 
             if (valdKategori != null)
             {
